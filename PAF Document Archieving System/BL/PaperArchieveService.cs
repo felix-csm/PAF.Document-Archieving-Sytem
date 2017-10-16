@@ -10,6 +10,11 @@ namespace PAF.DAS.Service.BL
 {
     public class PaperArchieveService : IPaperArchieveService
     {
+        private readonly IPaperArchieveDAL _paperArchieveDAL;
+        public PaperArchieveService(IPaperArchieveDAL paperArchieveDAL)
+        {
+            _paperArchieveDAL = paperArchieveDAL;
+        }
         public PaperArchieve Add(PaperArchieve paper)
         {
             throw new NotImplementedException();
@@ -17,7 +22,22 @@ namespace PAF.DAS.Service.BL
 
         public PaperArchieve Get(Guid ID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                PaperArchieve pArchieve = _paperArchieveDAL.Get(ID);
+                if (pArchieve != null)
+                {
+                    return pArchieve;
+                }
+                else
+                {
+                    throw new Exception("Paper does not exist");
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
