@@ -60,7 +60,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="PaperArchieveServiceTests.cs" />
-    <Compile Include="PaperServiceTest.cs" />
+    <Compile Include="PaperServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

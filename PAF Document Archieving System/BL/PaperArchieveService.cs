@@ -17,9 +17,30 @@ namespace PAF.DAS.Service.BL
         }
         public PaperArchieve Add(PaperArchieve paper)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var validator = new PaperValidator<PaperArchieve>();
+                if (validator.ValidateInput(paper))
+                {
+                    if (Get(paper.ID) == null)
+                    {
+                        return _paperArchieveDAL.Add(paper);
+                    }
+                    else
+                    {
+                        throw new Exception("Paper already exist");
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.GetBaseException();
+            }
         }
-
         public PaperArchieve Get(Guid ID)
         {
             try
@@ -31,12 +52,12 @@ namespace PAF.DAS.Service.BL
                 }
                 else
                 {
-                    throw new Exception("Paper does not exist");
+                    return null;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw e;
+                throw ex.GetBaseException();
             }
         }
     }
