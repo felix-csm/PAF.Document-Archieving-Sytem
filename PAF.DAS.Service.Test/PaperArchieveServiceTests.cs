@@ -16,8 +16,8 @@ namespace PAF.DAS.Service.Test
             //Arrange
             PaperArchieve expectedPaper = new PaperArchieve()
             {
-                ID = new Guid(),
-                PaperID = new Guid(),
+                Id = new Guid(),
+                PaperId = new Guid(),
                 FileName = "Sample File",
                 Location = "Sample Location"
             };
@@ -38,8 +38,8 @@ namespace PAF.DAS.Service.Test
             //Arrange
             PaperArchieve expectedPaper = new PaperArchieve()
             {
-                ID = new Guid(),
-                PaperID = new Guid(),
+                Id = new Guid(),
+                PaperId = new Guid(),
                 FileName = "Sample File",
                 Location = "Sample Location"
             };

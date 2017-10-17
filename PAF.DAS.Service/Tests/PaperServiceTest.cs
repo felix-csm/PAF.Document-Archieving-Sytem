@@ -1,12 +1,12 @@
-﻿using PAF_Document_Archieving_System.Interfaces;
+﻿using PAF.DAS.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PAF_Document_Archieving_System.Model;
+using PAF.DAS.Service.Model;
 
-namespace PAF_Document_Archieving_System.Tests
+namespace PAF.DAS.Service.Tests
 {
     public class PaperServiceTest
     {

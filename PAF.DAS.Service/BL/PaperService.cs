@@ -10,11 +10,13 @@ namespace PAF.DAS.Service.BL
 {
     public class PaperService : IPaperService
     {
-        private List<Paper> _papers = new List<Paper>();
-        public List<Paper> Papers
+        private readonly IPaperDAL _paperDAL;
+
+        public PaperService(IPaperDAL paperDAL)
         {
-            get { return _papers; }
+            _paperDAL = paperDAL;
         }
+
         public Paper Add(Paper paper)
         {
             throw new NotImplementedException();
@@ -29,7 +31,7 @@ namespace PAF.DAS.Service.BL
         }
         public List<Paper> GetAll()
         {
-            throw new NotImplementedException();
+            return _paperDAL.GetAll();
         }
     }
 }

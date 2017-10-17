@@ -1,20 +1,20 @@
-﻿using Dapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PAF.DAS.Service.Model
 {
-    [Table("Paper")]
+    [Table("PaperArchieve")]
     public class PaperArchieve
     {
         //[Required(ErrorMessage = "ID is required.")]
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
         //[Required(ErrorMessage = "Paper ID is required.")]
-        public Guid PaperID { get; set; }
+        public Guid PaperId { get; set; }
         //[Required(ErrorMessage = "FileName is required.")]
         public string FileName { get; set; }
         //[Required(ErrorMessage = "Author is required.")]

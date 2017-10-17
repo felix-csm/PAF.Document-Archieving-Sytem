@@ -1,23 +1,18 @@
 ﻿using PAF.DAS.Service.Interfaces;
+using PAF.DAS.Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PAF.DAS.Service.Model;
-using Dapper;
-using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
 
 namespace PAF.DAS.Service.DAL
 {
     public class PaperDAL : IPaperDAL
     {
-        private IDbConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-        public PaperDAL()
-        {
+        private readonly DasDBContext _context;
 
+        public PaperDAL(DasDBContext context)
+        {
+            _context = context;
         }
 
         public Paper Add(Paper paper)
@@ -32,7 +27,7 @@ namespace PAF.DAS.Service.DAL
 
         public List<Paper> GetAll()
         {
-            return Dapper.SimpleCRUD.GetList<Paper>(dbConnection).ToList();
+            return _context.Papers.ToList();
         }
 
         public Paper Update(Paper modifiedPaper)

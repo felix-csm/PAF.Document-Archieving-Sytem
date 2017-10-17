@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PAF.DAS.Service.Interfaces;
+using PAF.DAS.Service.Model;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+    [Route("api/papers")]
+    public class PapersController : Controller
     {
+        private readonly IPaperService _paperService;
+
+        public PapersController(IPaperService paperService)
+        {
+            _paperService = paperService;
+        }
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Paper> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _paperService.GetAll();
         }
 
         // GET api/values/5
