@@ -19,7 +19,29 @@ namespace PAF.DAS.Service.BL
 
         public Paper Add(Paper paper)
         {
-            throw new NotImplementedException();
+            var validator = new PaperValidator<Paper>();
+            try
+            {
+                if (validator.ValidateInput(paper))
+                {
+                    if (Get(paper.Id) == null)
+                    {
+                        return _paperDAL.Add(paper);
+                    }
+                    else
+                    {
+                        throw new Exception("Paper already exist");
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.GetBaseException();
+            }
         }
         public Paper Edit(Paper modifiedPaper)
         {
@@ -27,11 +49,33 @@ namespace PAF.DAS.Service.BL
         }
         public Paper Get(Guid ID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Paper paper = _paperDAL.Get(ID);
+                if (paper != null)
+                {
+                    return paper;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.GetBaseException();
+            }
         }
         public List<Paper> GetAll()
         {
-            return _paperDAL.GetAll();
+            try
+            {
+                return _paperDAL.GetAll();                
+            }
+            catch (Exception ex)
+            {
+                throw ex.GetBaseException();
+            }
         }
     }
 }

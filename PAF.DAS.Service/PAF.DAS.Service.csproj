@@ -111,12 +111,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PAF.DAS.Database\PAF.DAS.Database.sqlproj">
-      <Project>{c666e9b9-6c5d-4b7d-a783-54d466485f9e}</Project>
-      <Name>PAF.DAS.Database</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
