@@ -1,13 +1,20 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using PAF.DAS.Service.Model;
-using PAF.DAS.Service.Interfaces;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using PAF.DAS.Service.BL;
 using PAF.DAS.Service.DAL;
+using PAF.DAS.Service.Interfaces;
+using PAF.DAS.Service.Model;
+using System;
+using System.Text;
 
 namespace PAF.DAS.WebAPI
 {
@@ -31,19 +38,68 @@ namespace PAF.DAS.WebAPI
 
             services.AddAutoMapper();
             services.AddDbContext<DasDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddEntityFrameworkSqlServer()
+                    .AddDbContext<UserDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<UserDBContext>();
 
             //Add the DAL and Service here for DI
             services.AddTransient<IPaperDAL, PaperDAL>();
             services.AddTransient<IPaperService, PaperService>();
+
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //    // avoid redirecting REST clients on 401
+            //    options.ApplicationCookie.Events = new CookieAuthenticationEvents
+            //    {
+            //        OnRedirectToLogin = ctx =>
+            //        {
+            //            ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            //            return Task.FromResult(0);
+            //        }
+            //    };
+            //});
+
+            services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
+
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("JWTSettings:SecretKey").Value));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                // The signing key must match!
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                // Validate the JWT Issuer (iss) claim
+                ValidateIssuer = true,
+                ValidIssuer = Configuration.GetSection("JWTSettings:Issuer").Value,
+                // Validate the JWT Audience (aud) claim
+                ValidateAudience = true,
+                ValidAudience = Configuration.GetSection("JWTSettings:Audience").Value,
+
+                // Validate the token expiry
+                ValidateLifetime = true,
+
+                // If you want to allow a certain amount of clock drift, set that here:
+                ClockSkew = TimeSpan.Zero
+            };
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => {
+                options.TokenValidationParameters = tokenValidationParameters;
+            });
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
+            app.UseExceptionHandler();
+            app.UseAuthentication();
 
             app.UseMvc();
         }
