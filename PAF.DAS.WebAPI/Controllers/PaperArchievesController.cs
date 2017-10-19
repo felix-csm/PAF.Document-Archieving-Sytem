@@ -8,28 +8,21 @@ using PAF.DAS.Service.Model;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
-    [Route("api/papers")]
-    public class PapersController : Controller
+    [Route("api/paperarchieves")]
+    public class PaperArchievesController : Controller
     {
-        private readonly IPaperService _paperService;
+        private readonly IPaperArchieveService _paperArchieveService;
 
-        public PapersController(IPaperService paperService)
+        public PaperArchievesController(IPaperArchieveService paperArchieveService)
         {
-            _paperService = paperService;
-        }
-
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<Paper> Get()
-        {
-            return _paperService.GetAll();
+            _paperArchieveService = paperArchieveService;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
-            var result = _paperService.Get(id);
+            var result = _paperArchieveService.Get(id);
             if (result != null)
             {
                 return Ok(result);

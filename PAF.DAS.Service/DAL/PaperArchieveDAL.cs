@@ -8,7 +8,7 @@ using PAF.DAS.Service.Model;
 
 namespace PAF.DAS.Service.DAL
 {
-    class PaperArchieveDAL : IPaperArchieveDAL
+    public class PaperArchieveDAL : IPaperArchieveDAL
     {
         private readonly DasDBContext _context;
 

@@ -47,6 +47,8 @@ namespace PAF.DAS.WebAPI
             //Add the DAL and Service here for DI
             services.AddTransient<IPaperDAL, PaperDAL>();
             services.AddTransient<IPaperService, PaperService>();
+            services.AddTransient<IPaperArchieveDAL, PaperArchieveDAL>();
+            services.AddTransient<IPaperArchieveService, PaperArchieveService>();
 
             //services.Configure<IdentityOptions>(options =>
             //{
