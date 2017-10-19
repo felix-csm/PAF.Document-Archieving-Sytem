@@ -19,16 +19,16 @@ namespace PAF.DAS.Service.Model
     [Table("Paper")]
     public class Paper
     {
-        //[Required(ErrorMessage = "ID is required.")]
+        [Required(ErrorMessage = "ID is required.")]
         public Guid Id { get; set; }
-        //[Required(ErrorMessage = "Title is required.")]
+        [Required(ErrorMessage = "Title is required.")]
         public string Title { get; set; }
-        //[Required(ErrorMessage = "Author is required.")]
+        [Required(ErrorMessage = "Author is required.")]
         public string Author { get; set; }
-        //[Required(ErrorMessage = "Document Type is required.")]
+        [Required(ErrorMessage = "Document Type is required.")]
         public DocumentType DocumentType { get; set; }
-        //[Required(ErrorMessage = "Year Submitted is required.")]
-        public string YearSubmitted { get; set; }       
+        [Required(ErrorMessage = "Year Submitted is required.")]
+        public string YearSubmitted { get; set; }
         public string Remarks { get; set; }
     }
 }

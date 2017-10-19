@@ -10,24 +10,72 @@ namespace PAF.DAS.Service.DAL
 {
     class PaperArchieveDAL : IPaperArchieveDAL
     {
+        private readonly DasDBContext _context;
+
+        public PaperArchieveDAL(DasDBContext context)
+        {
+            _context = context;
+        }
         public PaperArchieve Add(PaperArchieve paper)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.PaperArchieves.Add(paper);
+                _context.SaveChanges();
+                return paper;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public PaperArchieve Get(Guid ID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.PaperArchieves.FirstOrDefault(x => x.Id.Equals(ID));
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public List<PaperArchieve> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.PaperArchieves.ToList();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public PaperArchieve Update(PaperArchieve modifiedPaper)
         {
-            throw new NotImplementedException();
+            PaperArchieve _paper;
+            try
+            {
+                _paper = _context.PaperArchieves.FirstOrDefault(p => p.Id.Equals(modifiedPaper.Id));
+
+                if (_paper == null)
+                {
+                    throw new KeyNotFoundException("Paper Archieve not found.");
+                }
+                _paper.FileName = modifiedPaper.FileName;
+                _paper.Location = modifiedPaper.Location;
+                _context.PaperArchieves.Update(modifiedPaper);
+                _context.SaveChanges();
+                return _paper;
+            }
+            catch
+            {
+
+                throw;
+            }
         }
     }
 }
