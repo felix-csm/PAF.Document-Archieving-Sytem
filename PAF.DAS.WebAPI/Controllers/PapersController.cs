@@ -65,8 +65,17 @@ namespace PAF.DAS.WebAPI.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put([FromBody]Paper value)
         {
+            var result = _paperService.Edit(value);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return StatusCode(404);
+            }
         }
 
         // DELETE api/values/5

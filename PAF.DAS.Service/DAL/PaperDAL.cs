@@ -71,13 +71,12 @@ namespace PAF.DAS.Service.DAL
                 _paper.Author = modifiedPaper.Author;
                 _paper.YearSubmitted = modifiedPaper.YearSubmitted;
                 _paper.Remarks = modifiedPaper.Remarks;
-                _context.Papers.Update(modifiedPaper);
+                _context.Papers.Update(_paper);
                 _context.SaveChanges();
                 return _paper;
             }
             catch
             {
-
                 throw;
             }
         }

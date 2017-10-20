@@ -45,7 +45,29 @@ namespace PAF.DAS.Service.BL
         }
         public Paper Edit(Paper modifiedPaper)
         {
-            throw new NotImplementedException();
+            var validator = new PaperValidator<Paper>();
+            try
+            {
+                if (validator.ValidateInput(modifiedPaper))
+                {
+                    if (Get(modifiedPaper.Id) != null)
+                    {
+                        return _paperDAL.Update(modifiedPaper);
+                    }
+                    else
+                    {
+                        throw new Exception("Paper not exist");
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.GetBaseException();
+            }
         }
         public Paper Get(Guid ID)
         {
