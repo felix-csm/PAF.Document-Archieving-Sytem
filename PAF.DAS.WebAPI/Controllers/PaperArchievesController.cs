@@ -35,9 +35,17 @@ namespace PAF.DAS.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]PaperArchieve value)
         {
-            
+            var result = _paperArchieveService.Add(value);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return StatusCode(409);
+            }
         }
 
         // PUT api/values/5

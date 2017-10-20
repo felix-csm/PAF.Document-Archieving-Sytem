@@ -9,7 +9,7 @@ index key, rounded up to the nearest power of two.
 
 CREATE TABLE [dbo].[PaperArchieve]
 (
-	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY NONCLUSTERED, 
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY NONCLUSTERED DEFAULT newid(), 
     [PaperId] UNIQUEIDENTIFIER NULL, 
     [FileName] NVARCHAR(50) NULL, 
     [Location] NVARCHAR(200) NULL

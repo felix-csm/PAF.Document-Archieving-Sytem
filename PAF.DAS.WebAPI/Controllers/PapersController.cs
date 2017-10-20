@@ -20,9 +20,17 @@ namespace PAF.DAS.WebAPI.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Paper> Get()
+        public IActionResult Get()
         {
-            return _paperService.GetAll();
+            var result = _paperService.GetAll();
+            if (result.Count != 0)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return StatusCode(404);
+            }
         }
 
         // GET api/values/5
@@ -42,9 +50,17 @@ namespace PAF.DAS.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]Paper value)
         {
-            
+            var result = _paperService.Add(value);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return StatusCode(409);
+            }
         }
 
         // PUT api/values/5
