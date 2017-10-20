@@ -63,8 +63,8 @@ namespace PAF.DAS.WebAPI.Controllers
             }
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
+        // PUT api/values
+        [HttpPut]
         public IActionResult Put([FromBody]Paper value)
         {
             var result = _paperService.Edit(value);
