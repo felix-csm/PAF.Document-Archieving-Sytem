@@ -13,7 +13,6 @@ using JWT.Serializers;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
-    [Produces("application/json")]
     [Route("api/Login")]
     public class LoginController : Controller
     {

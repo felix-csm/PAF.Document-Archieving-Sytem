@@ -8,6 +8,7 @@ using PAF.DAS.Service.Model;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
+    [Produces("application/json")]
     [Route("api/papers")]
     public class PapersController : Controller
     {
@@ -76,12 +77,6 @@ namespace PAF.DAS.WebAPI.Controllers
             {
                 return StatusCode(404);
             }
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

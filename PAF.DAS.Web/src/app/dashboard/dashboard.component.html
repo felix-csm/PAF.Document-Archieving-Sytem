@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+      <dashboard-filter (onFilter)="filter($event)"></dashboard-filter>
+    </div>
+    <div class="col-lg-9">
+      <div class="col-md-12">
+        <div class="page-header">
+          <h2>
+            <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Paper Archives
+          </h2>
+        </div>
+        <table id="cr-table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Type</th>
+              <th>Year Submitted</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td>{{item.title}}</td>
+              <td>{{item.author}}</td>
+              <td>{{item.documentType}}</td>
+              <td>{{item.yearSubmitted}}</td>
+              <td>{{item.remarks}}</td>
+            </tr>
+            <tr *ngIf="items && items.length == 0">
+              <td colspan="10">No records to display.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
