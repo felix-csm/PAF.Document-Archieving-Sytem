@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrated3M.Framework.BL", "Integrated3M.Framework.BL\Integrated3M.Framework.BL.csproj", "{5A3F46DC-9414-413A-9F68-55D7E156CF58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrated3M.Framework.Repository", "Integrated3M.Framework.Repository\Integrated3M.Framework.Repository.csproj", "{F3FB8C1B-ABB2-413B-AD17-20DB776EFCA1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PAF.DAS", "PAF.DAS", "{1EB7F329-AAE9-42D8-AB5E-6803F47FCBBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PAF.DAS.Service", "PAF.DAS.Service\PAF.DAS.Service.csproj", "{65588CBF-A468-4948-9A98-95B2FED6A344}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PAF.DAS.BL", "PAF.DAS.BL\PAF.DAS.BL.csproj", "{614044C6-5F42-4B00-B31F-DFBA11511DD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrated3M.Framework.API", "Integrated3M.Framework.API\Integrated3M.Framework.API.csproj", "{50BD8468-C025-4883-954B-DD38F825A85A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrated3M.Framework.API.Tests", "Integrated3M.Framework.API.Tests\Integrated3M.Framework.API.Tests.csproj", "{4E93CC34-22E7-433D-B435-D880D4AC61BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A3F46DC-9414-413A-9F68-55D7E156CF58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3F46DC-9414-413A-9F68-55D7E156CF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A3F46DC-9414-413A-9F68-55D7E156CF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3F46DC-9414-413A-9F68-55D7E156CF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3FB8C1B-ABB2-413B-AD17-20DB776EFCA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3FB8C1B-ABB2-413B-AD17-20DB776EFCA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3FB8C1B-ABB2-413B-AD17-20DB776EFCA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3FB8C1B-ABB2-413B-AD17-20DB776EFCA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65588CBF-A468-4948-9A98-95B2FED6A344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65588CBF-A468-4948-9A98-95B2FED6A344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65588CBF-A468-4948-9A98-95B2FED6A344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65588CBF-A468-4948-9A98-95B2FED6A344}.Release|Any CPU.Build.0 = Release|Any CPU
+		{614044C6-5F42-4B00-B31F-DFBA11511DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614044C6-5F42-4B00-B31F-DFBA11511DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614044C6-5F42-4B00-B31F-DFBA11511DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614044C6-5F42-4B00-B31F-DFBA11511DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50BD8468-C025-4883-954B-DD38F825A85A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50BD8468-C025-4883-954B-DD38F825A85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50BD8468-C025-4883-954B-DD38F825A85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50BD8468-C025-4883-954B-DD38F825A85A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E93CC34-22E7-433D-B435-D880D4AC61BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E93CC34-22E7-433D-B435-D880D4AC61BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E93CC34-22E7-433D-B435-D880D4AC61BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E93CC34-22E7-433D-B435-D880D4AC61BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{65588CBF-A468-4948-9A98-95B2FED6A344} = {1EB7F329-AAE9-42D8-AB5E-6803F47FCBBA}
+		{614044C6-5F42-4B00-B31F-DFBA11511DD0} = {1EB7F329-AAE9-42D8-AB5E-6803F47FCBBA}
+	EndGlobalSection
+EndGlobal
