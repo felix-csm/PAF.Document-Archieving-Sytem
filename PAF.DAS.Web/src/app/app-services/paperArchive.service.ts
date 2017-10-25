@@ -26,6 +26,14 @@ export class PaperArchiveSvc {
             .then(response => response.json() as PaperArchive)
             .catch(this.handleError);
     }
+    
+    search(paperArchive: PaperArchive): Promise<PaperArchive[]> {
+        const url = `${GlobalSettings.API_URL}/papers/search`;
+        return this.http.post(url,paperArchive)
+            .toPromise()
+            .then(response => response.json() as PaperArchive[])
+            .catch(this.handleError);
+    }
 
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only

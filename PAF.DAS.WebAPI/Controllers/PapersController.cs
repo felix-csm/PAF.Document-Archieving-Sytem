@@ -27,7 +27,18 @@ namespace PAF.DAS.WebAPI.Controllers
             var result = _paperService.GetAll();
             return Ok(result);
         }
-
+        // GET api/search
+        [HttpPost("search")]
+        public IActionResult Search([FromBody]Paper value)
+        {
+            var result = _paperService.GetAll();
+            var x = result.Where(p => String.IsNullOrEmpty(value.Title) ? true : p.Title.ToLower().Contains(value.Title.ToLower()))
+                .Where(p => value.DocumentType == 0 ? true : p.DocumentType == value.DocumentType)
+                .Where(p => String.IsNullOrEmpty(value.Author) ? true : p.Author.ToLower().Contains(value.Author.ToLower()))
+                .Where(p => String.IsNullOrEmpty(value.YearSubmitted) ? true : p.YearSubmitted.ToLower().Contains(value.YearSubmitted.ToLower()))
+                .Where(p => String.IsNullOrEmpty(value.Remarks) ? true : p.Remarks.ToLower().Contains(value.Remarks.ToLower())).ToList();
+            return Ok(x);
+        }
         // GET api/values/5
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)

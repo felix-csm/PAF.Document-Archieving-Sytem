@@ -14,26 +14,22 @@ export class DashboardComponent implements OnInit {
     items: PaperArchive[];
     errorMessage: string;
     mode = 'Observable';
-    title: string = '';
-    author: string = '';
-    yearSubmitted: string = '';
+    params: PaperArchive = new PaperArchive();
 
     constructor(
         private paperArchiveSvc: PaperArchiveSvc
     ) { }
 
     private populate() {
-        this.paperArchiveSvc.get(this.title, this.author, this.yearSubmitted).then(
+        this.paperArchiveSvc.search(this.params).then(
             response => {
                 this.items = response;
             },
             error => this.errorMessage = <any>error);
     }
 
-    filter(params: any) {
-        this.title = params.title;
-        this.author = params.author;
-        this.yearSubmitted = params.yearSubmitted;
+    filter(searchParams: PaperArchive) {
+        this.params = searchParams;
         this.populate();
     }
 

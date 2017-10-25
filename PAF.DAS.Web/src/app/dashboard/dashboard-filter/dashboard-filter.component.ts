@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { PaperArchive } from '../../app-models/paperArchive';
 
 @Component({
     selector: 'dashboard-filter',
@@ -8,7 +9,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 export class DashboardFilterComponent implements OnInit {
     name = 'search-filter';
     mode = 'Observable';
-    params: any = { title: '', author: '', yearSubmitted: '', remarks: '' };
+    params: PaperArchive = new PaperArchive();
     @Output() onFilter = new EventEmitter();
 
     constructor() { }
@@ -16,6 +17,9 @@ export class DashboardFilterComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    clear(): void {
+        this.params = new PaperArchive();
+    }
     filter(): void {
         this.onFilter.emit(this.params);
     }

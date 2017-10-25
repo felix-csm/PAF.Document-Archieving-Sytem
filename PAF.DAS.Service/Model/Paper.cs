@@ -11,9 +11,10 @@ namespace PAF.DAS.Service.Model
 {
     public enum DocumentType
     {
-        CommandantsPaper,
-        PositionPaper,
-        CaseStudy
+        None = 0,
+        CommandantsPaper =1,
+        PositionPaper =2,
+        CaseStudy =3
     }
 
     [Table("Paper")]
