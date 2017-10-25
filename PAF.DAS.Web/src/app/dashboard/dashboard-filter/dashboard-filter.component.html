@@ -1,27 +1,25 @@
 <div class="page-header">
   <h3>Search</h3>
 </div>
-<div class="well well-sm">
-  <form class="bs-component">
-    <div class="form-group">
-      <label class="control-label" for="skill">Title</label>
-      <input class="form-control" name="skill" type="text" [(ngModel)]="params.title">
-    </div>
-    <div class="form-group">
-      <label class="control-label" for="author">Author</label>
-      <input class="form-control" name="author" type="text" [(ngModel)]="params.author">
-    </div>
-    <div class="form-group">
-      <label class="control-label" for="yearSubmitted">Year Submitted</label>
-      <input class="form-control" name="yearSubmitted" type="text" [(ngModel)]="params.yearSubmitted">
-    </div>
-    <div class="form-group">
-      <label class="control-label" for="remarks">Remarks</label>
-      <input class="form-control" name="remarks" type="text" [(ngModel)]="params.remarks">
-    </div>
-    <div class="form-group col-lg-offset-9">
-      <button type="button" (click)="filter()" class="btn btn-primary">
-        <i class="glyphicon glyphicon-search"></i> GO</button>
-    </div>
-  </form>
+<div class="well well-md">
+  <div class="form-group">
+    <label class="control-label" for="skill">Title</label>
+    <input class="form-control" name="skill" type="text" [(ngModel)]="params.title">
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="author">Author</label>
+    <input class="form-control" name="author" type="text" [(ngModel)]="params.author">
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="yearSubmitted">Year Submitted</label>
+    <input class="form-control" name="yearSubmitted" type="text" [(ngModel)]="params.yearSubmitted">
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="remarks">Remarks</label>
+    <input class="form-control" name="remarks" type="text" [(ngModel)]="params.remarks">
+  </div>
+  <div class="form-group col-lg-offset-9">
+    <button type="button" (click)="filter()" class="btn btn-primary">
+      <i class="glyphicon glyphicon-search"></i> GO</button>
+  </div>
 </div>

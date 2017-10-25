@@ -194,6 +194,8 @@
     <Compile Include="Interfaces\IPaperArchieveService.cs" />
     <Compile Include="Interfaces\IPaperDAL.cs" />
     <Compile Include="Interfaces\IPaperService.cs" />
+    <Compile Include="Model\ApplicationDbContext.cs" />
+    <Compile Include="Model\ApplicationUser.cs" />
     <Compile Include="Model\Credentials.cs" />
     <Compile Include="Model\DasDBContext.cs" />
     <Compile Include="Model\Paper.cs" />

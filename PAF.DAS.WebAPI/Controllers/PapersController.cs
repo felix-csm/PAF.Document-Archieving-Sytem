@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PAF.DAS.Service.Interfaces;
 using PAF.DAS.Service.Model;
+using Microsoft.Extensions.Logging;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
@@ -24,14 +25,7 @@ namespace PAF.DAS.WebAPI.Controllers
         public IActionResult Get()
         {
             var result = _paperService.GetAll();
-            if (result.Count != 0)
-            {
-                return Ok(result);
-            }
-            else
-            {
-                return StatusCode(404);
-            }
+            return Ok(result);
         }
 
         // GET api/values/5

@@ -2,6 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonAppModule } from '../common/common.module';
+import { RouterModule } from '@angular/router';
 
 // Components
 import { DashboardComponent } from './dashboard.component';
@@ -9,13 +10,14 @@ import { DashboardFilterComponent } from './dashboard-filter/dashboard-filter.co
 import { DateOrNullModule } from '../common/date-or-null.module';
 
 // Providers
-import { DashboardSvc } from './dashboard.service';
+import { PaperArchiveSvc } from '../app-services/paperArchive.service';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         CommonAppModule,
+        RouterModule,
         DateOrNullModule.forRoot()
     ],
     declarations: [
@@ -23,7 +25,7 @@ import { DashboardSvc } from './dashboard.service';
         DashboardFilterComponent
     ],
     providers: [
-        DashboardSvc
+        PaperArchiveSvc
     ]
 })
 

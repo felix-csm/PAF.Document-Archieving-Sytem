@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { LoginComponent } from '../app-login/app-login.component';
 import { AboutComponent } from '../about/about.component';
+import { PaperArchiveComponent } from '../paperArchive/paperArchive.component';
 
 import { AuthGuard } from '../common/auth.guard';
 
@@ -14,14 +15,17 @@ const _routes: Routes = [{
 }, {
     path: 'dashboard',
     component: DashboardComponent,
-    data: { isRoot: true, title: 'Dashboard' },
     canActivate: [AuthGuard]
 }, {
-    path: 'login', component: LoginComponent,
-    data: { isRoot: false, title: 'Login' }
+    path: 'papers/add',
+    component: PaperArchiveComponent,
+    canActivate: [AuthGuard]
 }, {
-    path: 'about', component: AboutComponent,
-    data: { isRoot: false, title: 'Login' }
+    path: 'login',
+    component: LoginComponent
+}, {
+    path: 'about',
+    component: AboutComponent
 }];
 
 @NgModule({

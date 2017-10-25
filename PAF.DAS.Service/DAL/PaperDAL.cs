@@ -8,9 +8,9 @@ namespace PAF.DAS.Service.DAL
 {
     public class PaperDAL : IPaperDAL
     {
-        private readonly DasDBContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public PaperDAL(DasDBContext context)
+        public PaperDAL(ApplicationDbContext context)
         {
             _context = context;
         }

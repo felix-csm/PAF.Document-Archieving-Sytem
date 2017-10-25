@@ -6,7 +6,7 @@ import { PaperArchive } from '../app-models/paperArchive';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class DashboardSvc {
+export class PaperArchiveSvc {
     errorMessage: string;
 
     constructor(private http: Http) { }
@@ -16,6 +16,14 @@ export class DashboardSvc {
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as PaperArchive[])
+            .catch(this.handleError);
+    }
+
+    save(paperArchive: PaperArchive): Promise<PaperArchive[]> {
+        const url = `${GlobalSettings.API_URL}/papers`;
+        return this.http.post(url, paperArchive)
+            .toPromise()
+            .then(response => response.json() as PaperArchive)
             .catch(this.handleError);
     }
 

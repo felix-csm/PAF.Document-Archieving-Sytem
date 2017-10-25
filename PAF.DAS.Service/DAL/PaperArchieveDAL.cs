@@ -10,9 +10,9 @@ namespace PAF.DAS.Service.DAL
 {
     public class PaperArchieveDAL : IPaperArchieveDAL
     {
-        private readonly DasDBContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public PaperArchieveDAL(DasDBContext context)
+        public PaperArchieveDAL(ApplicationDbContext context)
         {
             _context = context;
         }

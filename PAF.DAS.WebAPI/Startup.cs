@@ -37,12 +37,11 @@ namespace PAF.DAS.WebAPI
             });
 
             services.AddAutoMapper();
-            services.AddDbContext<DasDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddEntityFrameworkSqlServer()
-                    .AddDbContext<UserDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                    .AddEntityFrameworkStores<UserDBContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
 
             //Add the DAL and Service here for DI
             services.AddTransient<IPaperDAL, PaperDAL>();
@@ -50,6 +49,7 @@ namespace PAF.DAS.WebAPI
             services.AddTransient<IPaperArchieveDAL, PaperArchieveDAL>();
             services.AddTransient<IPaperArchieveService, PaperArchieveService>();
 
+            services.AddLogging();
             //services.Configure<IdentityOptions>(options =>
             //{
             //    // avoid redirecting REST clients on 401
@@ -89,6 +89,7 @@ namespace PAF.DAS.WebAPI
             .AddJwtBearer(options => {
                 options.TokenValidationParameters = tokenValidationParameters;
             });
+
             services.AddAuthorization(options =>
             {
                 options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();

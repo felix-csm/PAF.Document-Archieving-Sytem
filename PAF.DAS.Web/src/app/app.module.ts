@@ -16,6 +16,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AboutComponent } from './about/about.component';
+import { PaperArchiveComponent } from './paperArchive/paperArchive.component';
 
 // providers
 import { requestOptionsProvider } from './common/default-request-options.service';
@@ -39,7 +40,8 @@ import { NotificationsService  } from 'angular2-notifications';
     declarations: [
         AppComponent,
         AppHeaderComponent,
-        AboutComponent
+        AboutComponent,
+        PaperArchiveComponent
     ],
     providers: [requestOptionsProvider, GlobalSettings, CurrentUserService, NotificationsService],
     bootstrap: [AppComponent]
