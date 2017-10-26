@@ -11,9 +11,7 @@ namespace PAF.DAS.Service.Model
     [Table("PaperArchieve")]
     public class PaperArchieve
     {
-        [Required(ErrorMessage = "ID is required.")]
         public Guid Id { get; set; }
-        [Required(ErrorMessage = "Paper ID is required.")]
         public Guid PaperId { get; set; }
         [Required(ErrorMessage = "FileName is required.")]
         public string FileName { get; set; }

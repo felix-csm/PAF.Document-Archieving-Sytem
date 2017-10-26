@@ -19,8 +19,7 @@ namespace PAF.DAS.Service.Model
 
     [Table("Paper")]
     public class Paper
-    {
-        [Required(ErrorMessage = "ID is required.")]
+    {        
         public Guid Id { get; set; }
         [Required(ErrorMessage = "Title is required.")]
         public string Title { get; set; }

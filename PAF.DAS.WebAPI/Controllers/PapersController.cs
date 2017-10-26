@@ -36,7 +36,7 @@ namespace PAF.DAS.WebAPI.Controllers
                 .Where(p => value.DocumentType == 0 ? true : p.DocumentType == value.DocumentType)
                 .Where(p => String.IsNullOrEmpty(value.Author) ? true : p.Author.ToLower().Contains(value.Author.ToLower()))
                 .Where(p => String.IsNullOrEmpty(value.YearSubmitted) ? true : p.YearSubmitted.ToLower().Contains(value.YearSubmitted.ToLower()))
-                .Where(p => String.IsNullOrEmpty(value.Remarks) ? true : p.Remarks.ToLower().Contains(value.Remarks.ToLower())).ToList();
+                .Where(p => String.IsNullOrEmpty(value.Remarks) ? true : p.Remarks.ToLower().Contains(value.Remarks.ToLower())).OrderBy(p=>p.Title).ToList();
             return Ok(x);
         }
         // GET api/values
