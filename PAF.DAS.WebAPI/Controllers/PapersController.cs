@@ -39,11 +39,11 @@ namespace PAF.DAS.WebAPI.Controllers
                 .Where(p => String.IsNullOrEmpty(value.Remarks) ? true : p.Remarks.ToLower().Contains(value.Remarks.ToLower())).ToList();
             return Ok(x);
         }
-        // GET api/values/5
+        // GET api/values
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public IActionResult Get(Guid ID)
         {
-            var result = _paperService.Get(id);
+            var result = _paperService.Get(ID);
             if (result != null)
             {
                 return Ok(result);

@@ -6,8 +6,16 @@
     <div class="col-md-12">
       <form>
         <div class="form-group">
-          <label class="control-label" for="skill">Title</label>
-          <input class="form-control" name="skill" type="text" [(ngModel)]="model.title" />
+          <label class="control-label" for="title">Title</label>
+          <input class="form-control" name="title" type="text" [(ngModel)]="model.title" />
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="documentType">Document Type</label>
+          <select class="form-control" name="documentType" [(ngModel)]="model.documentType">
+            <option value=1>Commandant's Paper</option>
+            <option value=2>Position Paper</option>
+            <option value=3>Case Study</option>
+        </select>
         </div>
         <div class="form-group">
           <label class="control-label" for="author">Author</label>
