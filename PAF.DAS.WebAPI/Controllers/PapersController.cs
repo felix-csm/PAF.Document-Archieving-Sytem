@@ -36,14 +36,14 @@ namespace PAF.DAS.WebAPI.Controllers
                 .Where(p => value.DocumentType == 0 ? true : p.DocumentType == value.DocumentType)
                 .Where(p => String.IsNullOrEmpty(value.Author) ? true : p.Author.ToLower().Contains(value.Author.ToLower()))
                 .Where(p => String.IsNullOrEmpty(value.YearSubmitted) ? true : p.YearSubmitted.ToLower().Contains(value.YearSubmitted.ToLower()))
-                .Where(p => String.IsNullOrEmpty(value.Remarks) ? true : p.Remarks.ToLower().Contains(value.Remarks.ToLower())).OrderBy(p=>p.Title).ToList();
+                .Where(p => String.IsNullOrEmpty(value.Remarks) ? true : p.Remarks.ToLower().Contains(value.Remarks.ToLower())).OrderBy(p => p.Title).ToList();
             return Ok(x);
         }
         // GET api/values
         [HttpGet("{id}")]
-        public IActionResult Get(Guid ID)
+        public IActionResult Get(Guid id)
         {
-            var result = _paperService.Get(ID);
+            var result = _paperService.Get(id);
             if (result != null)
             {
                 return Ok(result);
@@ -70,10 +70,10 @@ namespace PAF.DAS.WebAPI.Controllers
         }
 
         // PUT api/values
-        [HttpPut]
-        public IActionResult Put([FromBody]Paper value)
+        [HttpPut("{id}")]
+        public IActionResult Put(Guid id, [FromBody]Paper value)
         {
-            var result = _paperService.Edit(value);
+            var result = _paperService.Update(value);
             if (result != null)
             {
                 return Ok(result);

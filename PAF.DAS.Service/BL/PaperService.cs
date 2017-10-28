@@ -43,7 +43,7 @@ namespace PAF.DAS.Service.BL
                 throw ex.GetBaseException();
             }
         }
-        public Paper Edit(Paper modifiedPaper)
+        public Paper Update(Paper modifiedPaper)
         {
             var validator = new PaperValidator<Paper>();
             try

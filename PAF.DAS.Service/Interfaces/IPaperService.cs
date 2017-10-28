@@ -12,6 +12,6 @@ namespace PAF.DAS.Service.Interfaces
         Paper Add(Paper paper);
         List<Paper> GetAll();
         Paper Get(Guid ID);
-        Paper Edit(Paper modifiedPaper);
+        Paper Update(Paper modifiedPaper);
     }
 }

@@ -1,33 +1,16 @@
-﻿<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Magenic Manpower App</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="/" />
-    <!-- Styles -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="utf-8">
+  <title>AETDC Research Portal</title>
+  <base href="/">
 
-    <!-- IE required polyfills, in this exact order : Note - This is just a test for some issue in IE -->
-    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <!-- Polyfill(s) for older browsers -->
-    <script src="node_modules/core-js/client/shim.min.js"></script>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-
-    <script src="node_modules/zone.js/dist/zone.js"></script>
-    <script src="node_modules/systemjs/dist/system.src.js"></script>
-
-    <script src="systemjs.config.js"></script>
-    <script>
-        System.import('main.js').catch(function (err) { console.error(err); });
-    </script>
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-
 <body>
-  <paf-das></paf-das>
+  <app-root></app-root>
 </body>
-
 </html>

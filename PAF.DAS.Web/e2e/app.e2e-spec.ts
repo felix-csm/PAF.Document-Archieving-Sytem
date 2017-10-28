@@ -1,11 +1,14 @@
-﻿import { browser, element, by } from 'protractor';
+import { AppPage } from './app.po';
 
-describe('App header tests', function () {
-    let expectedMsg = 'Manpower App';
-    beforeEach(function () {
-        browser.get('');
-    });
-    it('should display: ' + expectedMsg, function () {
-        expect(element(by.className('navbar-brand')).getText()).toEqual(expectedMsg);
-    });
+describe('my-app App', () => {
+  let page: AppPage;
+
+  beforeEach(() => {
+    page = new AppPage();
+  });
+
+  it('should display welcome message', () => {
+    page.navigateTo();
+    expect(page.getParagraphText()).toEqual('Welcome to app!');
+  });
 });
