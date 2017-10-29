@@ -18,7 +18,7 @@ import { PaperArchive } from '../../models/paper-archive';
 })
 
 export class PaperArchiveComponent implements OnInit {
-    title: string;
+    formName: string;
     private model: PaperArchive;
     errorMessage: string;
     filesToUpload: File[];
@@ -31,7 +31,7 @@ export class PaperArchiveComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.title = 'Archive a Paper';
+        this.formName = 'Archive a Paper';
         this.model = new PaperArchive();
         if (this.route.snapshot.paramMap.has('id')) {
             const id = this.route.snapshot.paramMap.get('id');
@@ -39,7 +39,7 @@ export class PaperArchiveComponent implements OnInit {
                 this.model = response;
             },
                 error => this.errorMessage = <any>error);
-            this.title = 'Edit Archive Details';
+            this.formName = 'Edit Archive Details';
         }
     }
 
