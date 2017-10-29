@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="card col-md-6">
+    <div class="card-body">
+      <h3 class="card-title">
+        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Log in</h3>
+      <hr/>
+      <form #loginForm (ngSubmit)="onSubmit(loginForm)">
+        <div class="form-group">
+          <label class="control-label" for="email">Email</label>
+          <input class="form-control" id="email" name="email" type="email" [(ngModel)]="model.email" placeholder="[Email]" required
+          />
+          <!-- <small class="label label-warning" [hidden]="email.valid || email.pristine || email.untouched">Please enter a valid email.</small> -->
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="password">Password</label>
+          <input class="form-control" id="password" name="password" type="password" [(ngModel)]="model.password" placeholder="[Password]"
+            required/>
+        </div>
+        <div class="pull-right">
+          <button type="submit" class="btn btn-primary">
+            SIGN-IN
+            <i class="glyphicon glyphicon-chevron-right"></i>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>

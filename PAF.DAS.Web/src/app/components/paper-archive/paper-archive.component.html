@@ -1,17 +1,23 @@
-<div class="page-header">
-  <h3>{{formName}}</h3>
+<div class="row">
+    <div class="col-md-2"></div>
+  <div class="page-header col-md-8">
+    <h3>{{formName}}</h3>
+  </div>
+  <div class="col-md-2"></div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
     <form>
       <span class="text-warning">{{errorMessage}}</span>
       <div class="form-group">
         <label class="control-label" for="title">Title</label>
-        <input class="form-control" name="title" type="text" [(ngModel)]="model.title" placeholder="[Title]"/>        
+        <input class="form-control" name="title" type="text" [(ngModel)]="model.title" placeholder="[Title]"/>
       </div>
       <div class="form-group">
         <label class="control-label" for="documentType">Document Type</label>
-        <select class="form-control" name="documentType" [(ngModel)]="model.documentType" placeholder="[Select a Document Type]" >
+        <select class="form-control" name="documentType" [(ngModel)]="model.documentType" placeholder="[Select a Document Type]">
+          <option value=0>None</option>
           <option value=1>Commandant's Paper</option>
           <option value=2>Position Paper</option>
           <option value=3>Case Study</option>
@@ -19,11 +25,12 @@
       </div>
       <div class="form-group">
         <label class="control-label" for="author">Author</label>
-        <input class="form-control" name="author" type="text" [(ngModel)]="model.author"  placeholder="[Author]"/>
+        <input class="form-control" name="author" type="text" [(ngModel)]="model.author" placeholder="[Author]" />
       </div>
       <div class="form-group">
         <label class="control-label" for="yearSubmitted">Year Submitted</label>
-        <input class="form-control" name="yearSubmitted" type="text" [(ngModel)]="model.yearSubmitted"  placeholder="[Year Submitter]"/>
+        <input class="form-control" name="yearSubmitted" type="text" [(ngModel)]="model.yearSubmitted" placeholder="[Year Submitter]"
+        />
       </div>
       <div class="form-group">
         <label class="control-label" for="remarks">Remarks</label>
@@ -31,6 +38,7 @@
       </div>
       <div class="form-group" *ngIf="!model.id">
         <label class="control-label" for="remarks">PDF soft copy</label>
+        <span class="text-error">{{errorMessage}}</span>
         <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." accept="application/pdf" />
       </div>
       <div class="form-group pull-right">
@@ -41,4 +49,5 @@
       </div>
     </form>
   </div>
+  <div class="col-md-2"></div>
 </div>

@@ -8,7 +8,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 import 'rxjs/add/operator/toPromise';
 
-
 @Injectable()
 export class FileSvc {
     errorMessage: string;

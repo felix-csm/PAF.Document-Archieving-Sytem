@@ -16,13 +16,13 @@ namespace PAF.DAS.WebAPI.Controllers
     [Route("api/Login")]
     public class LoginController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JWTSettings _options;
 
         public LoginController(
-          UserManager<IdentityUser> userManager,
-          SignInManager<IdentityUser> signInManager,
+          UserManager<ApplicationUser> userManager,
+          SignInManager<ApplicationUser> signInManager,
           IOptions<JWTSettings> optionsAccessor)
         {
             _userManager = userManager;
@@ -35,7 +35,7 @@ namespace PAF.DAS.WebAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Credentials.Email, Email = Credentials.Email };
+                var user = new ApplicationUser { UserName = Credentials.Email, Email = Credentials.Email };
                 var result = await _userManager.CreateAsync(user, Credentials.Password);
                 if (result.Succeeded)
                 {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { CurrentUser } from '../models/currentUser';
+import { CurrentUser } from '../models/current-user';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Injectable()
