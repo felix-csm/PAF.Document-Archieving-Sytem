@@ -16,6 +16,11 @@
           </h3>
         </div>
         <div class="list-group">
+            <div class="col-sm-12" *ngIf="items?.length == 0">
+            <span class="list-group-item">
+                No records found.
+             </span>
+            </div>
           <div class="col-sm-6" *ngFor="let item of items">
             <button class="list-group-item">
               <h4 class="list-group-item-heading text-info">
