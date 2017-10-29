@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
+import { FileSelectDirective } from 'ng2-file-upload';
 
 import { AppRoutingModule } from './app.routing.module';
 import { DashboardModule } from './components/dashboard/dashboard.module';
@@ -23,7 +23,8 @@ import { AuthGuard } from './components/security/auth.guard';
         AppComponent,
         HeaderComponent,
         AboutComponent,
-        PaperArchiveComponent
+        PaperArchiveComponent,
+        FileSelectDirective
     ],
     imports: [
         BrowserModule,

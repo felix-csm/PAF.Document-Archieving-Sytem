@@ -5,4 +5,5 @@ export class PaperArchive {
     documentType: number;
     yearSubmitted: string;
     remarks: string;
+    fileName: string;
 }

@@ -36,7 +36,11 @@ namespace PAF.DAS.WebAPI
                 jsonOptions.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             });
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(m =>
+            {
+                m.CreateMap<PaperArchiveModel, Paper>();
+                m.CreateMap<Paper, PaperArchiveModel>();
+            });
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()

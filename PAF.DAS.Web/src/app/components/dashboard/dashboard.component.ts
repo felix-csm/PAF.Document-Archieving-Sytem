@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { PaperArchiveSvc } from '../../services/paper-archive.service';
+import { FileSvc } from '../../services/file.service';
 import { PaperArchive } from '../../models/paper-archive';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
-    providers: [PaperArchiveSvc]
+    providers: [PaperArchiveSvc, FileSvc]
 })
 
 export class DashboardComponent implements OnInit {
@@ -16,7 +17,8 @@ export class DashboardComponent implements OnInit {
     params: PaperArchive = new PaperArchive();
 
     constructor(
-        private paperArchiveSvc: PaperArchiveSvc
+        private paperArchiveSvc: PaperArchiveSvc,
+        private fileSvc: FileSvc
     ) { }
 
     private populate() {
@@ -27,9 +29,13 @@ export class DashboardComponent implements OnInit {
             error => this.errorMessage = <any>error);
     }
 
-    filter(searchParams: PaperArchive) {
+    filter(searchParams: PaperArchive): void {
         this.params = searchParams;
         this.populate();
+    }
+
+    view(id: string, name: string): void {
+        this.fileSvc.viewFile(id, name);
     }
 
     ngOnInit() {

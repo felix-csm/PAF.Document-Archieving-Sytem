@@ -13,5 +13,6 @@ namespace PAF.DAS.Service.Interfaces
         List<PaperArchieve> GetAll();
         PaperArchieve Get(Guid ID);
         PaperArchieve Update(PaperArchieve modifiedPaper);
+        PaperArchieve GetByPaperId(Guid ID);
     }
 }

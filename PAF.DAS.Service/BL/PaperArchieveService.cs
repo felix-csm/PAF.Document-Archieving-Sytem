@@ -60,5 +60,25 @@ namespace PAF.DAS.Service.BL
                 throw ex.GetBaseException();
             }
         }
+
+        public PaperArchieve GetByPaperId(Guid ID)
+        {
+            try
+            {
+                PaperArchieve pArchieve = _paperArchieveDAL.GetByPaperId(ID);
+                if (pArchieve != null)
+                {
+                    return pArchieve;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.GetBaseException();
+            }
+        }
     }
 }

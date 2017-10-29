@@ -29,6 +29,10 @@
         <label class="control-label" for="remarks">Remarks</label>
         <textarea class="form-control" name="remarks" type="text" [(ngModel)]="model.remarks" style="resize: none;" placeholder="[Remarks]"></textarea>
       </div>
+      <div class="form-group" *ngIf="!model.id">
+        <label class="control-label" for="remarks">PDF soft copy</label><span class="text-error">{{errorMessage}}</span>
+        <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." accept="application/pdf" />
+      </div>
       <div class="form-group pull-right">
         <button type="button" (click)="cancel()" class="btn btn-default">
           <i class="glyphicon glyphicon-cancel"></i> CANCEL</button>

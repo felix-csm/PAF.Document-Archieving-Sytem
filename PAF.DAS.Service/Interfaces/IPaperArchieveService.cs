@@ -11,5 +11,6 @@ namespace PAF.DAS.Service.Interfaces
     {
         PaperArchieve Add(PaperArchieve paper);
         PaperArchieve Get(Guid ID);
+        PaperArchieve GetByPaperId(Guid ID);
     }
 }

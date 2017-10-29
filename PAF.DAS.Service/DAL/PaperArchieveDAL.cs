@@ -54,6 +54,18 @@ namespace PAF.DAS.Service.DAL
             }
         }
 
+        public PaperArchieve GetByPaperId(Guid ID)
+        {
+            try
+            {
+                return _context.PaperArchieves.FirstOrDefault(x => x.PaperId.Equals(ID));
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public PaperArchieve Update(PaperArchieve modifiedPaper)
         {
             PaperArchieve _paper;

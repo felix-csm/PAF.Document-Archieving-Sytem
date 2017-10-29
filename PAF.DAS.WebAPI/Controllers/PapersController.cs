@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PAF.DAS.Service.Interfaces;
 using PAF.DAS.Service.Model;
-using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
@@ -13,11 +14,17 @@ namespace PAF.DAS.WebAPI.Controllers
     [Route("api/papers")]
     public class PapersController : Controller
     {
+        private IHostingEnvironment _hostingEnvironment;
         private readonly IPaperService _paperService;
+        private readonly IPaperArchieveService _paperArchiveService;
+        private readonly IMapper _mapper;
 
-        public PapersController(IPaperService paperService)
+        public PapersController(IPaperService paperService, IMapper mapper, IPaperArchieveService paperArchiveService, IHostingEnvironment environment)
         {
             _paperService = paperService;
+            _paperArchiveService = paperArchiveService;
+            _mapper = mapper;
+            _hostingEnvironment = environment;
         }
 
         // GET api/values
@@ -29,15 +36,17 @@ namespace PAF.DAS.WebAPI.Controllers
         }
         // GET api/search
         [HttpPost("search")]
-        public IActionResult Search([FromBody]Paper value)
+        public IActionResult Search([FromBody]PaperArchiveModel value)
         {
             var result = _paperService.GetAll();
-            var x = result.Where(p => String.IsNullOrEmpty(value.Title) ? true : p.Title.ToLower().Contains(value.Title.ToLower()))
+            var list = result.Where(p => String.IsNullOrEmpty(value.Title) ? true : p.Title.ToLower().Contains(value.Title.ToLower()))
                 .Where(p => value.DocumentType == 0 ? true : p.DocumentType == value.DocumentType)
                 .Where(p => String.IsNullOrEmpty(value.Author) ? true : p.Author.ToLower().Contains(value.Author.ToLower()))
                 .Where(p => String.IsNullOrEmpty(value.YearSubmitted) ? true : p.YearSubmitted.ToLower().Contains(value.YearSubmitted.ToLower()))
                 .Where(p => String.IsNullOrEmpty(value.Remarks) ? true : p.Remarks.ToLower().Contains(value.Remarks.ToLower())).OrderBy(p => p.Title).ToList();
-            return Ok(x);
+
+            var paper = _mapper.Map<List<Paper>, List<PaperArchiveModel>> (list);
+            return Ok(list);
         }
         // GET api/values
         [HttpGet("{id}")]
@@ -46,7 +55,8 @@ namespace PAF.DAS.WebAPI.Controllers
             var result = _paperService.Get(id);
             if (result != null)
             {
-                return Ok(result);
+                var paper = _mapper.Map<Paper, PaperArchiveModel>(result);
+                return Ok(paper);
             }
             else
             {
@@ -56,11 +66,34 @@ namespace PAF.DAS.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody]Paper value)
-        {
-            var result = _paperService.Add(value);
+        public IActionResult Post([FromBody]PaperArchiveModel value)
+        { 
+            var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
+            var result = _paperService.Add(paper);
             if (result != null)
             {
+                string tempPath = Path.Combine(Path.GetTempPath(), value.FileName.ToString());
+                string uploadPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                string officialPath = Path.Combine(uploadPath, value.FileName.ToString());
+                _paperArchiveService.Add(new PaperArchieve
+                {
+                    FileName = value.FileName.ToString(),
+                    Location = officialPath,
+                    PaperId = result.Id
+                });
+
+                FileInfo file = new FileInfo(tempPath);
+                DirectoryInfo uploadDirectory = new DirectoryInfo(uploadPath);
+                if(file.Exists)
+                {
+                    if (!uploadDirectory.Exists)
+                    {
+                        uploadDirectory.Create();
+                    }
+                    file.CopyTo(officialPath);
+                    file.Delete();
+                }
+
                 return Ok(result);
             }
             else
@@ -71,9 +104,10 @@ namespace PAF.DAS.WebAPI.Controllers
 
         // PUT api/values
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody]Paper value)
+        public IActionResult Put(Guid id, [FromBody]PaperArchiveModel value)
         {
-            var result = _paperService.Update(value);
+            var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
+            var result = _paperService.Update(paper);
             if (result != null)
             {
                 return Ok(result);
@@ -82,6 +116,6 @@ namespace PAF.DAS.WebAPI.Controllers
             {
                 return StatusCode(404);
             }
-        }
+        }       
     }
 }
