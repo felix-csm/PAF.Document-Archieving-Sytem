@@ -50,16 +50,14 @@ export class PaperArchiveComponent implements OnInit {
                 this.paperArchiveSvc.add(this.model).then(
                     response => {
                         this.router.navigate(['/dashboard']);
-                    },
-                    error => this.errorMessage = <any>error);
+                    }, error => this.errorMessage = <any>error);
 
             }, error => this.errorMessage = <any>error);
         } else {
             this.paperArchiveSvc.update(this.model).then(
                 response => {
                     this.router.navigate(['/dashboard']);
-                },
-                error => this.errorMessage = <any>error);
+                }, error => this.errorMessage = <any>error);
         }
     }
 

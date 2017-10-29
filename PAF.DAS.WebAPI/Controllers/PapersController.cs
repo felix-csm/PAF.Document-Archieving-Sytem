@@ -45,7 +45,7 @@ namespace PAF.DAS.WebAPI.Controllers
                 .Where(p => String.IsNullOrEmpty(value.YearSubmitted) ? true : p.YearSubmitted.ToLower().Contains(value.YearSubmitted.ToLower()))
                 .Where(p => String.IsNullOrEmpty(value.Remarks) ? true : p.Remarks.ToLower().Contains(value.Remarks.ToLower())).OrderBy(p => p.Title).ToList();
 
-            var paper = _mapper.Map<List<Paper>, List<PaperArchiveModel>> (list);
+            var paper = _mapper.Map<List<Paper>, List<PaperArchiveModel>>(list);
             return Ok(list);
         }
         // GET api/values
@@ -67,36 +67,43 @@ namespace PAF.DAS.WebAPI.Controllers
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]PaperArchiveModel value)
-        { 
-            var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
-            if (!ValidateTitle(paper.Title))
+        {
+            if (value.Title != null)
             {
-                var result = _paperService.Add(paper);
-                if (result != null)
+                var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
+                if (!ValidateTitle(paper.Title))
                 {
-                    string tempPath = Path.Combine(Path.GetTempPath(), value.FileName.ToString());
-                    string uploadPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-                    string officialPath = Path.Combine(uploadPath, value.FileName.ToString());
-                    _paperArchiveService.Add(new PaperArchieve
+                    var result = _paperService.Add(paper);
+                    if (result != null)
                     {
-                        FileName = value.FileName.ToString(),
-                        Location = officialPath,
-                        PaperId = result.Id
-                    });
-
-                    FileInfo file = new FileInfo(tempPath);
-                    DirectoryInfo uploadDirectory = new DirectoryInfo(uploadPath);
-                    if (file.Exists)
-                    {
-                        if (!uploadDirectory.Exists)
+                        string tempPath = Path.Combine(Path.GetTempPath(), value.FileName.ToString());
+                        string uploadPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                        string officialPath = Path.Combine(uploadPath, value.FileName.ToString());
+                        _paperArchiveService.Add(new PaperArchieve
                         {
-                            uploadDirectory.Create();
-                        }
-                        file.CopyTo(officialPath);
-                        file.Delete();
-                    }
+                            FileName = value.FileName.ToString(),
+                            Location = officialPath,
+                            PaperId = result.Id
+                        });
 
-                    return Ok(result);
+                        FileInfo file = new FileInfo(tempPath);
+                        DirectoryInfo uploadDirectory = new DirectoryInfo(uploadPath);
+                        if (file.Exists)
+                        {
+                            if (!uploadDirectory.Exists)
+                            {
+                                uploadDirectory.Create();
+                            }
+                            file.CopyTo(officialPath);
+                            file.Delete();
+                        }
+
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return BadRequest("Adding paper that are already exist is not permitted.");
+                    }
                 }
                 else
                 {
@@ -105,7 +112,7 @@ namespace PAF.DAS.WebAPI.Controllers
             }
             else
             {
-                return BadRequest("Adding paper that are already exist is not permitted.");
+                return BadRequest("Title is required.");
             }
         }
 
@@ -114,14 +121,28 @@ namespace PAF.DAS.WebAPI.Controllers
         public IActionResult Put(Guid id, [FromBody]PaperArchiveModel value)
         {
             var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
-            var result = _paperService.Update(paper);
-            if (result != null)
+            if (paper.Title.Length != 0)
             {
-                return Ok(result);
+                if (!ValidateTitle(paper.Title))
+                {
+                    var result = _paperService.Update(paper);
+                    if (result != null)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return StatusCode(404);
+                    }
+                }
+                else
+                {
+                    return BadRequest("Adding paper that are already exist is not permitted.");
+                }
             }
             else
             {
-                return StatusCode(404);
+                return BadRequest("Title is required.");
             }
         }
         private bool ValidateTitle(string title)

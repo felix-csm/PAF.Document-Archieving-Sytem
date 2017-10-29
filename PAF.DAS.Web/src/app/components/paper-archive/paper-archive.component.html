@@ -17,7 +17,6 @@
       <div class="form-group">
         <label class="control-label" for="documentType">Document Type</label>
         <select class="form-control" name="documentType" [(ngModel)]="model.documentType" placeholder="[Select a Document Type]">
-          <option value=0>None</option>
           <option value=1>Commandant's Paper</option>
           <option value=2>Position Paper</option>
           <option value=3>Case Study</option>
@@ -38,7 +37,6 @@
       </div>
       <div class="form-group" *ngIf="!model.id">
         <label class="control-label" for="remarks">PDF soft copy</label>
-        <span class="text-error">{{errorMessage}}</span>
         <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." accept="application/pdf" />
       </div>
       <div class="form-group pull-right">
