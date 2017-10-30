@@ -8,41 +8,63 @@
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-8">
-    <form>
-      <span class="text-warning">{{errorMessage}}</span>
-      <div class="form-group">
+    <h5 class="text-warning">{{errorMessage}}</h5>
+    <form #paperArchieveForm="ngForm" (ngSubmit)="onSubmit(paperArchieveForm)">
+      
+      <div class="form-group">        
         <label class="control-label" for="title">Title</label>
-        <input class="form-control" name="title" type="text" [(ngModel)]="model.title" placeholder="[Title]" />
+        <input class="form-control" id="title" name="title" type="text" [(ngModel)]="model.title" placeholder="[Title]" #title="ngModel" required />
+        <div *ngIf="!title.valid && (title.dirty || title.touched)" class="text-warning">
+            <small *ngIf="title.errors.required">
+              Please enter the title.
+            </small>
+          </div>
       </div>
       <div class="form-group">
         <label class="control-label" for="documentType">Document Type</label>
-        <select class="form-control" name="documentType" [(ngModel)]="model.documentType" placeholder="[Select a Document Type]">
+        <select class="form-control" id="documentType" name="documentType" [(ngModel)]="model.documentType" placeholder="[Select a Document Type]" #documentType="ngModel" required>
           <option value=1>Commandant's Paper</option>
           <option value=2>Position Paper</option>
           <option value=3>Case Study</option>
         </select>
+        <div *ngIf="!documentType.valid && (documentType.dirty || documentType.touched)" class="text-warning">
+            <small *ngIf="documentType.errors.required">
+              Please select a document type.
+            </small>
+          </div>
       </div>
       <div class="form-group">
         <label class="control-label" for="author">Author</label>
-        <input class="form-control" name="author" type="text" [(ngModel)]="model.author" placeholder="[Author]" />
+        <input class="form-control" id="author" name="author" type="text" [(ngModel)]="model.author" placeholder="[Author]"#author="ngModel" required/>
+        <div *ngIf="!author.valid && (author.dirty || author.touched)" class="text-warning">
+            <small *ngIf="author.errors.required">
+              Please enter the author.
+            </small>
+          </div>
       </div>
       <div class="form-group">
         <label class="control-label" for="yearSubmitted">Year Submitted</label>
-        <input class="form-control" name="yearSubmitted" type="text" [(ngModel)]="model.yearSubmitted" placeholder="[Year Submitter]"
-        />
+        <input class="form-control" id="yearSubmitted"name="yearSubmitted" type="text" [(ngModel)]="model.yearSubmitted" placeholder="[Year Submitter]" #yearSubmitted = "ngModel" required/>
+        <div *ngIf="!yearSubmitted.valid && (yearSubmitted.dirty || yearSubmitted.touched)" class="text-warning">
+            <small *ngIf="yearSubmitted.errors.required">
+              Please enter the year submitted.
+            </small>
+          </div>
       </div>
       <div class="form-group">
         <label class="control-label" for="remarks">Remarks</label>
         <textarea class="form-control" name="remarks" type="text" [(ngModel)]="model.remarks" style="resize: none;" placeholder="[Remarks]"></textarea>
       </div>
-      <div class="form-group" *ngIf="!model.id">
-        <label class="control-label" for="remarks">PDF soft copy</label>
-        <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." accept="application/pdf" />
+      <div class="form-group panel panel-default">
+        <div class="input-group nput-group-sm" >
+        <span class="input-group-addon" id="pdf-addon2"><b>PDF</b></span>
+        <input class="form-control" type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." accept="application/pdf" aria-describedby="pdf-addon2"/>
+      </div>
       </div>
       <div class="form-group pull-right">
         <button type="button" (click)="cancel()" class="btn btn-default">
           <i class="glyphicon glyphicon-cancel"></i> CANCEL</button>
-        <button type="button" (click)="save()" class="btn btn-primary">
+        <button type="button" (click)="save()" class="btn btn-primary" [disabled]="!paperArchieveForm.valid && (paperArchieveForm.dirty || paperArchieveForm.untouched)">
           <i class="glyphicon glyphicon-save"></i> SAVE</button>
       </div>
     </form>
