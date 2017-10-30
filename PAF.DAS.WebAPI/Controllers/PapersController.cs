@@ -68,7 +68,7 @@ namespace PAF.DAS.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]PaperArchiveModel value)
         {
-            if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null))
+            if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null) && (value.FileName != null))
             {
                 var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
                 if (!ValidateTitle(paper.Title))
