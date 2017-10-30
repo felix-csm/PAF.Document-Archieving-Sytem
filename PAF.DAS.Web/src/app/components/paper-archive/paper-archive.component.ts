@@ -22,6 +22,7 @@ export class PaperArchiveComponent implements OnInit {
     private model: PaperArchive;
     errorMessage: string;
     filesToUpload: File[];
+    private fileIsValid: boolean;
 
     constructor(
         private paperArchiveSvc: PaperArchiveSvc,
@@ -67,5 +68,6 @@ export class PaperArchiveComponent implements OnInit {
 
     fileChangeEvent(fileInput: any) {
         this.filesToUpload = <Array<File>>fileInput.target.files;
+        this.fileIsValid = this.filesToUpload.length === 0;
     }
 }
