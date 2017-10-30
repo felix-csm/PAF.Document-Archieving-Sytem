@@ -68,7 +68,7 @@ namespace PAF.DAS.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]PaperArchiveModel value)
         {
-            if (value.Title != null)
+            if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null))
             {
                 var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
                 if (!ValidateTitle(paper.Title))
@@ -112,7 +112,7 @@ namespace PAF.DAS.WebAPI.Controllers
             }
             else
             {
-                return BadRequest("Title is required.");
+                return BadRequest("Required fields cannot be empty.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace PAF.DAS.WebAPI.Controllers
         public IActionResult Put(Guid id, [FromBody]PaperArchiveModel value)
         {
             var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
-            if (paper.Title.Length != 0)
+            if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null))
             {
                 if (!ValidateTitle(paper.Title))
                 {
@@ -142,7 +142,7 @@ namespace PAF.DAS.WebAPI.Controllers
             }
             else
             {
-                return BadRequest("Title is required.");
+                return BadRequest("Required fields cannot be empty.");
             }
         }
         private bool ValidateTitle(string title)
