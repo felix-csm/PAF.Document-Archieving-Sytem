@@ -25,6 +25,8 @@ export class AuthComponent implements OnInit {
 
     ngOnInit(): void {
         this.model = new Login();
+        this.model.email = '';
+        this.model.password = '';
         localStorage.setItem('currentUser', '');
     }
 

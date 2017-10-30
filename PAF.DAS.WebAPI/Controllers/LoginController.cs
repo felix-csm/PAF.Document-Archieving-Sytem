@@ -42,8 +42,7 @@ namespace PAF.DAS.WebAPI.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return new JsonResult(new Dictionary<string, object>
                     {
-                        { "access_token", GetAccessToken(Credentials.Email) },
-                        { "id_token", GetIdToken(user) }
+                        { "access_token", GetAccessToken(user) },
                     });
                 }
                 return Errors(result);
@@ -63,33 +62,30 @@ namespace PAF.DAS.WebAPI.Controllers
                     var user = await _userManager.FindByEmailAsync(Credentials.Email);
                     return new JsonResult(new Dictionary<string, object>
                     {
-                        { "access_token", GetAccessToken(Credentials.Email) },
-                        { "id_token", GetIdToken(user) }
+                        { "access_token", GetAccessToken(user) },
                     });
                 }
-                return new JsonResult("Unable to sign in") { StatusCode = 401 };
+                return new JsonResult("Unable to sign in.") { StatusCode = 401 };
             }
-            return Error("Unexpected error");
+            return new JsonResult("Unable to sign in.") { StatusCode = 401 };
         }
 
-        private string GetIdToken(IdentityUser user)
+        //private string GetIdToken(IdentityUser user)
+        //{
+        //    var payload = new Dictionary<string, object>
+        //    {
+        //        { "id", user.Id },
+        //        { "email", user.Email },
+        //    };
+        //    return GetToken(payload);
+        //}
+
+        private string GetAccessToken(IdentityUser user)
         {
             var payload = new Dictionary<string, object>
             {
                 { "id", user.Id },
-                { "sub", user.Email },
-                { "email", user.Email },
-                { "emailConfirmed", user.EmailConfirmed },
-            };
-            return GetToken(payload);
-        }
-
-        private string GetAccessToken(string Email)
-        {
-            var payload = new Dictionary<string, object>
-            {
-                { "sub", Email },
-                { "email", Email }
+                { "email", user.Email }
             };
             return GetToken(payload);
         }
@@ -107,7 +103,7 @@ namespace PAF.DAS.WebAPI.Controllers
             IJsonSerializer serializer = new JsonNetSerializer();
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
             IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
-
+            
             return encoder.Encode(payload, secret);
         }
 

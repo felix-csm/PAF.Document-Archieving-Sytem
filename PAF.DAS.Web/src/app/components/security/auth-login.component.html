@@ -1,30 +1,47 @@
-<div class="row">
+<div class="row" style="margin-top: 150px;">
   <div class="col-md-3"></div>
   <div class="card col-md-6">
-    <div class="card-body">
+    <div class="card-body well">
       <h3 class="card-title">
-        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Log in</h3>
+        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Authentication</h3>
       <hr/>
-      <form #loginForm (ngSubmit)="onSubmit(loginForm)">
-        <div class="form-group">
-          <label class="control-label" for="email">Email</label>
-          <input class="form-control" id="email" name="email" type="email" [(ngModel)]="model.email" placeholder="[Email]" required
-          />
-          <!-- <small class="label label-warning" [hidden]="email.valid || email.pristine || email.untouched">Please enter a valid email.</small> -->
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="password">Password</label>
-          <input class="form-control" id="password" name="password" type="password" [(ngModel)]="model.password" placeholder="[Password]"
-            required/>
-        </div>
-        <div class="pull-right">
-          <button type="submit" class="btn btn-primary">
-            SIGN-IN
-            <i class="glyphicon glyphicon-chevron-right"></i>
-          </button>
+      <h5 class="text-warning">{{errorMessage}}</h5>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+        <div class="list-group">
+          <div class="list-group-item">
+            <div class="input-group">
+              <span class="input-group-addon" id="email-addon">@</span>
+              <input class="form-control" id="email" name="email" type="email" [(ngModel)]="model.email" #email="ngModel" placeholder="Email"
+                required aria-describedby="email-addon">
+            </div>
+            <div *ngIf="!email.valid && (email.dirty || email.touched)" class="text-warning">
+              <small *ngIf="email.errors.required">
+                Please enter your email.
+              </small>
+            </div>
+          </div>
+          <div class="list-group-item">
+            <div class="input-group">
+              <span class="input-group-addon" id="password-addon">
+                <i class="glyphicon glyphicon-asterisk"></i>
+              </span>
+              <input class="form-control" id="password" name="password" type="password" [(ngModel)]="model.password" #password="ngModel"
+                placeholder="Password" required aria-describedby="password-addon">
+            </div>
+            <div *ngIf="!password.valid && (password.dirty || password.touched)" class="text-warning">
+              <small *ngIf="password.errors.required">
+                Please enter a password.
+              </small>
+            </div>
+          </div>
+          <div class="list-group-item">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!loginForm.valid && (loginForm.dirty || loginForm.touched)">
+              SIGN-IN
+              <i class="glyphicon glyphicon-chevron-right"></i>
+            </button>
+          </div>
         </div>
       </form>
-
     </div>
   </div>
   <div class="col-md-3"></div>
