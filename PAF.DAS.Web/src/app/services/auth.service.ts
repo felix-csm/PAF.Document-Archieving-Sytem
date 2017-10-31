@@ -11,17 +11,22 @@ import { CurrentUser } from '../models/current-user';
 
 @Injectable()
 export class AuthSvc {
-    //private announceUsername = new BehaviorSubject<string>('');
-
     constructor(
         private http: HttpClient
     ) { }
 
-    signIn(login: Login): Promise<CurrentUser> {
-        const url = `${AppSettings.API_URL}/login/sign-in`;
+    signIn(login: Login): Promise<any> {
+        const url = `${AppSettings.API_URL}/user/sign-in`;
         return this.http.post(url, login)
             .toPromise()
-            .then(response => response as CurrentUser)
+            .then(response => response as any)
+            .catch(this.handleError);
+    }
+
+    signOut() {
+        const url = `${AppSettings.API_URL}/user/sign-out`;
+        return this.http.get(url)
+            .toPromise()
             .catch(this.handleError);
     }
 

@@ -6,24 +6,24 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Login } from '../../models/login';
 import { AuthSvc } from '../../services/auth.service';
+import { CurrentUserSvc } from '../../services/current-user.service';
 
 @Component({
     selector: 'app-auth-login',
     templateUrl: './auth-login.component.html',
-    providers: [AuthSvc]
+    providers: [AuthSvc, CurrentUserSvc]
 })
 
-export class AuthComponent implements OnInit {
+export class AuthComponent {
     errorMessage: string;
     model: Login;
 
     constructor(
         private authSvc: AuthSvc,
+        private currentUserSvc: CurrentUserSvc,
         private route: ActivatedRoute,
         private router: Router,
-    ) { }
-
-    ngOnInit(): void {
+    ) {
         this.model = new Login();
         this.model.email = '';
         this.model.password = '';
@@ -33,12 +33,12 @@ export class AuthComponent implements OnInit {
     onSubmit(login) {
         this.authSvc.signIn(this.model)
         .then(response => {
-            localStorage.setItem('currentUser', JSON.stringify(response));
+            this.currentUserSvc.setCurrentUser(response.access_token);
             this.redirectToHome();
         }, error => this.errorMessage = <any>error);
     }
 
     redirectToHome() {
-        this.router.navigate(['']);
+        this.router.navigate(['dashboard']);
     }
 }

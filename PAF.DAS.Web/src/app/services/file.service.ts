@@ -16,33 +16,43 @@ export class FileSvc {
 
     upload(files: File[]): Promise<FileResponse> {
         const url = `${AppSettings.API_URL}/paperarchives/upload`;
-        return new Promise((resolve, reject) => {
-            const formData: any = new FormData();
-            const xhr = new XMLHttpRequest();
-            for (let i = 0; i < files.length; i++) {
-                formData.append('uploads[]', files[i], files[i].name);
-            }
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        resolve(JSON.parse(xhr.response));
-                    } else {
-                        reject(xhr.response);
-                    }
-                }
-            };
-            xhr.open('POST', url, true);
-            xhr.send(formData);
-        });
+        const formData: any = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            formData.append('uploads[]', files[i], files[i].name);
+        }
+        return this.http.post(url, formData)
+            .toPromise()
+            .then(response => response as FileResponse)
+            .catch(this.handleError);
+
+        // return new Promise((resolve, reject) => {
+        //     const formData: any = new FormData();
+        //     const xhr = new XMLHttpRequest();
+        //     for (let i = 0; i < files.length; i++) {
+        //         formData.append('uploads[]', files[i], files[i].name);
+        //     }
+        //     xhr.onreadystatechange = function () {
+        //         if (xhr.readyState === 4) {
+        //             if (xhr.status === 200) {
+        //                 resolve(JSON.parse(xhr.response));
+        //             } else {
+        //                 reject(xhr.response);
+        //             }
+        //         }
+        //     };
+        //     xhr.open('POST', url, true);
+        //     xhr.setRequestHeader('Authorization', `bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`);
+        //     xhr.send(formData);
+        // });
     }
 
     viewFile(id: string, name: string): void {
         const url = `${AppSettings.API_URL}/paperarchives/${encodeURIComponent(id)}/file`;
-        this.http.get(url, { responseType: 'blob'})
+        this.http.get(url, { responseType: 'blob' })
             .subscribe(
-                data => this.downloadFile(data, name),
-                error => alert('Error downloading file!'),
-                () => console.log('OK!')
+            data => this.downloadFile(data, name),
+            error => alert('Error downloading file!'),
+            () => console.log('OK!')
             );
     }
 
@@ -51,7 +61,7 @@ export class FileSvc {
         a.href = URL.createObjectURL(data);
         a.download = name;
         a.click();
-      }
+    }
 
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);

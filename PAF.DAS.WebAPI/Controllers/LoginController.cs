@@ -13,7 +13,7 @@ using JWT.Serializers;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
-    [Route("api/Login")]
+    [Route("api/user")]
     public class LoginController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -30,19 +30,44 @@ namespace PAF.DAS.WebAPI.Controllers
             _options = optionsAccessor.Value;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] Credentials Credentials)
+        //[HttpPost("register")]
+        //public async Task<IActionResult> Register([FromBody] LoginModel credentials)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = new ApplicationUser { UserName = credentials.Email, Email = credentials.Email };
+        //        var result = await _userManager.CreateAsync(user, credentials.Password);
+        //        if (result.Succeeded)
+        //        {
+        //            await _signInManager.SignInAsync(user, isPersistent: false);
+        //            return new JsonResult(new Dictionary<string, object>
+        //            {
+        //                { "access_token", GetAccessToken(user) },
+        //            });
+        //        }
+        //        return Errors(result);
+
+        //    }
+        //    return Error("Unexpected error");
+        //}
+
+        [HttpPut("reset")]
+        public async Task<IActionResult> Reset([FromBody] PasswordResetModel credentials)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Credentials.Email, Email = Credentials.Email };
-                var result = await _userManager.CreateAsync(user, Credentials.Password);
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                var result = await _userManager.ChangePasswordAsync(currentUser, credentials.CurrentPassword, credentials.NewPassword);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return new JsonResult(new Dictionary<string, object>
+                    await _signInManager.SignInAsync(currentUser, isPersistent: false);
+                    var user = await _userManager.FindByEmailAsync(credentials.Email);
+                    var roles = await _userManager.GetRolesAsync(user);
+                    return new JsonResult(new CurrentUserModel
                     {
-                        { "access_token", GetAccessToken(user) },
+                        Email = credentials.Email,
+                        Token = GetAccessToken(user, roles[0]),
+                        Roles = roles[0]
                     });
                 }
                 return Errors(result);
@@ -52,17 +77,18 @@ namespace PAF.DAS.WebAPI.Controllers
         }
 
         [HttpPost("sign-in")]
-        public async Task<IActionResult> SignIn([FromBody] Credentials Credentials)
+        public async Task<IActionResult> SignIn([FromBody] LoginModel credentials)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(Credentials.Email, Credentials.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(credentials.Email, credentials.Password, false, false);
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByEmailAsync(Credentials.Email);
-                    return new JsonResult(new Dictionary<string, object>
+                    var user = await _userManager.FindByEmailAsync(credentials.Email);
+                    var roles = await _userManager.GetRolesAsync(user);
+                    return new JsonResult(new
                     {
-                        { "access_token", GetAccessToken(user) },
+                        access_token = GetAccessToken(user, roles[0]),
                     });
                 }
                 return new JsonResult("Unable to sign in.") { StatusCode = 401 };
@@ -80,12 +106,13 @@ namespace PAF.DAS.WebAPI.Controllers
         //    return GetToken(payload);
         //}
 
-        private string GetAccessToken(IdentityUser user)
+        private string GetAccessToken(IdentityUser user, string role)
         {
             var payload = new Dictionary<string, object>
             {
                 { "id", user.Id },
-                { "email", user.Email }
+                { "email", user.Email },
+                { "isAdmin", role.ToLower() == "administrator" }
             };
             return GetToken(payload);
         }
@@ -103,7 +130,7 @@ namespace PAF.DAS.WebAPI.Controllers
             IJsonSerializer serializer = new JsonNetSerializer();
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
             IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
-            
+
             return encoder.Encode(payload, secret);
         }
 

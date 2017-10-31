@@ -1,13 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
+import { CurrentUserSvc } from '../../services/current-user.service';
+import { CurrentUser } from '../../models/current-user';
+
+import { Subscription } from 'rxjs/Subscription';
 @Injectable()
 export class AuthGuard implements CanActivate {
-    constructor(private router: Router) { }
+    userNameSubs: Subscription;
+    currentUser: CurrentUser;
+
+    constructor(
+        private router: Router,
+        private currentUserSvc: CurrentUserSvc
+    ) {
+        this.currentUserSvc.currentUser.subscribe(
+            item => {
+                this.currentUser = item;
+            }
+        );
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser) {
+        if (this.currentUser) {
             return true;
         }
 

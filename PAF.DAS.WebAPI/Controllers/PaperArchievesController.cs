@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PAF.DAS.Service.Interfaces;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/paperarchives")]
     public class PaperArchievesController : Controller
     {

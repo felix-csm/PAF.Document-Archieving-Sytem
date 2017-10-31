@@ -1,6 +1,5 @@
 export class CurrentUser {
+  id: string;
   email: string;
-  access_token: string;
-  id_token: string;
-  role: string;
+  isAdmin: boolean;
 }

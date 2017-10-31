@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +43,7 @@ namespace PAF.DAS.WebAPI
                 m.CreateMap<PaperArchiveModel, Paper>();
                 m.CreateMap<Paper, PaperArchiveModel>();
             });
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -52,6 +55,8 @@ namespace PAF.DAS.WebAPI
             services.AddTransient<IPaperService, PaperService>();
             services.AddTransient<IPaperArchieveDAL, PaperArchieveDAL>();
             services.AddTransient<IPaperArchieveService, PaperArchieveService>();
+
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.AddLogging();
             //services.Configure<IdentityOptions>(options =>
@@ -90,7 +95,8 @@ namespace PAF.DAS.WebAPI
             };
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options => {
+            .AddJwtBearer(options => 
+            {
                 options.TokenValidationParameters = tokenValidationParameters;
             });
 
@@ -100,17 +106,18 @@ namespace PAF.DAS.WebAPI
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IDbInitializer dbInitializer)
         {
             app.UseCors("CorsPolicy");
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
             app.UseExceptionHandler();
-            app.UseAuthentication();
 
+            app.UseAuthentication();
             app.UseMvc();
+
+            dbInitializer.Initialize().Wait();
         }
     }
 }

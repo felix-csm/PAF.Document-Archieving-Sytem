@@ -1,26 +1,31 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CurrentUser } from '../models/current-user';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CurrentUserSvc {
-    private announceUsername = new BehaviorSubject<string>('');
+    _currentUser = new BehaviorSubject<CurrentUser>(new CurrentUser());
 
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute) { }
+    setCurrentUser(token: string) {
+        localStorage.setItem('token', token);
+        const tokenData = token.split('.')[1];
+        const jsonData = JSON.parse(window.atob(tokenData));
 
-    broadcastLoggedUsername(username: string) {
-        this.announceUsername.next(username);
+        const newUser = new CurrentUser();
+        newUser.id = jsonData.id;
+        newUser.email = jsonData.email;
+        newUser.isAdmin = jsonData.isAdmin;
+
+        this._currentUser.next(newUser);
     }
 
-    get loggedUsername$() {
-        return this.announceUsername.asObservable();
+    get currentUser(): Observable<CurrentUser> {
+        return this._currentUser.asObservable();
     }
 
-    redirectAfterLoggedIn(data: CurrentUser) {
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-        this.router.navigate([returnUrl]);
+    signOut(): void {
+        localStorage.removeItem('token');
+        this._currentUser.next(new CurrentUser());
     }
 }

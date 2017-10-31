@@ -13,17 +13,23 @@
         <a href="../help/">Help</a>
       </li>
       <li>
-        <a routerLink="/about">About</a>
+        <a routerLink="about">About</a>
+      </li>
+      <li>
+        <a (click)="logout()">Log Off</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="user"><i class="glyphicon glyphicon-user"></i> Guest
+        <a class="dropdown-toggle" data-toggle="dropdown" id="user" aria-expanded="false">{{currentUser.email}}  <i class="glyphicon glyphicon-user"></i>
           <span class="caret"></span>
         </a>
-        <ul class="dropdown-menu" aria-labelledby="user">
+        <ul class="dropdown-menu" role="menu" aria-labelledby="user">
           <li>
-            <a href="../logout">Logout</a>
+            <a routerLink="logout">sdfdsdf</a>
+          </li>
+          <li>
+            <a routerLink="logout">Logout</a>
           </li>
         </ul>
       </li>

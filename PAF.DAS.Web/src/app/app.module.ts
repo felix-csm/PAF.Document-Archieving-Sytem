@@ -14,7 +14,10 @@ import { AboutComponent } from './components/about/about.component';
 import { PaperArchiveComponent } from './components/paper-archive/paper-archive.component';
 import { AuthComponent } from './components/security/auth-login.component';
 
-import { RequestOptionsProvider } from './common/request-options.provider';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './components/security/auth-interceptor';
+import { CurrentUserSvc } from './services/current-user.service';
+import { AuthSvc } from './services/auth.service';
 
 @NgModule({
     declarations: [
@@ -33,8 +36,13 @@ import { RequestOptionsProvider } from './common/request-options.provider';
         HttpClientModule,
         DashboardModule
     ],
-    providers: [
-        RequestOptionsProvider
+    providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+    },
+        CurrentUserSvc,
+        AuthSvc
     ],
     bootstrap: [
         AppComponent

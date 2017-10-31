@@ -1,42 +1,35 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AppRoutingModule } from '../../app.routing.module';
-import { Subscription } from 'rxjs/Subscription';
+import { CurrentUserSvc } from '../../services/current-user.service';
+import { AuthSvc } from '../../services/auth.service';
+import { CurrentUser } from '../../models/current-user';
 
+import { Observable } from 'rxjs/Observable';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
+    providers: [AuthSvc, CurrentUserSvc]
 })
 
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent {
     title = 'header';
     showCurrentUser = false;
-    subscription: Subscription;
-    private userName: string;
+    private currentUser: CurrentUser;
 
-    constructor(private appRouting: AppRoutingModule,
-        //private loginService: LoginService,
-        private router: Router,
-        //private currentUserService: CurrentUserService
+    constructor(private router: Router,
+        private currentUserSvc: CurrentUserSvc,
+        private authSvc: AuthSvc
     ) {
-        // subscribed to the changes made during login
-        // this.subscription = this.currentUserService.loggedUsername$.subscribe(
-        //     item => {
-        //         this.userName = item;
-        //         this.showCurrentUser = this.userName !== '';
-        //     }
-        // );
+        this.currentUserSvc.currentUser.subscribe(
+            value => this.currentUser = value
+        );
     }
 
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
-
-    logoutUser() {
-        //this.loginService.logout();
+    logout() {
+        this.authSvc.signOut();
         // clear logged username
-        //this.currentUserService.broadcastLoggedUsername('');
+        this.currentUserSvc.signOut();
         this.router.navigate(['/login']);
     }
 }

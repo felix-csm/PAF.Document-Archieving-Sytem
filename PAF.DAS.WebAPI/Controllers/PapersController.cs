@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PAF.DAS.Service.Interfaces;
@@ -10,6 +11,7 @@ using System.Linq;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/papers")]
     public class PapersController : Controller
@@ -64,14 +66,13 @@ namespace PAF.DAS.WebAPI.Controllers
             }
         }
 
-        // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]PaperArchiveModel value)
         {
             if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null))
             {
                 var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
-                if (!ValidateDuplicatePaper(paper))
+                if (!ValidateTitle(paper.Title))
                 {
                     var result = _paperService.Add(paper);
                     if (result != null)
@@ -116,28 +117,20 @@ namespace PAF.DAS.WebAPI.Controllers
             }
         }
 
-        // PUT api/values
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, [FromBody]PaperArchiveModel value)
         {
             var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
             if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null))
             {
-                if (!ValidateDuplicatePaper(paper))
+                var result = _paperService.Update(paper);
+                if (result != null)
                 {
-                    var result = _paperService.Update(paper);
-                    if (result != null)
-                    {
-                        return Ok(result);
-                    }
-                    else
-                    {
-                        return StatusCode(404);
-                    }
+                    return Ok(result);
                 }
                 else
                 {
-                    return BadRequest("Adding paper that are already exist is not permitted.");
+                    return StatusCode(404);
                 }
             }
             else
@@ -145,17 +138,10 @@ namespace PAF.DAS.WebAPI.Controllers
                 return BadRequest("Required fields cannot be empty.");
             }
         }
-        private bool ValidateDuplicatePaper(Paper paper)
+
+        private bool ValidateTitle(string title)
         {
-            if (_paperService.GetAll().Count == 0)
-            {
-                return false;
-            }
-            else
-            {
-                var _paper= _paperService.GetAll().FirstOrDefault(p=>p.Title.ToLower() == paper.Title.ToLower());
-                return _paper == null? false: _paper.Id != paper.Id;               
-            }         
+            return _paperService.GetAll().Any(p => p.Title.ToLower() == title.ToLower());
         }
     }
 }
