@@ -71,7 +71,7 @@ namespace PAF.DAS.WebAPI.Controllers
             if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null))
             {
                 var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
-                if (!ValidateTitle(paper.Title))
+                if (!ValidateDuplicatePaper(paper))
                 {
                     var result = _paperService.Add(paper);
                     if (result != null)
@@ -123,14 +123,21 @@ namespace PAF.DAS.WebAPI.Controllers
             var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
             if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null))
             {
-                var result = _paperService.Update(paper);
-                if (result != null)
+                if (!ValidateDuplicatePaper(paper))
                 {
-                    return Ok(result);
+                    var result = _paperService.Update(paper);
+                    if (result != null)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return StatusCode(404);
+                    }
                 }
                 else
                 {
-                    return StatusCode(404);
+                    return BadRequest("Adding paper that are already exist is not permitted.");
                 }
             }
             else
@@ -138,9 +145,17 @@ namespace PAF.DAS.WebAPI.Controllers
                 return BadRequest("Required fields cannot be empty.");
             }
         }
-        private bool ValidateTitle(string title)
+        private bool ValidateDuplicatePaper(Paper paper)
         {
-            return _paperService.GetAll().Any(p => p.Title.ToLower() == title.ToLower());
+            if (_paperService.GetAll().Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                var _paper= _paperService.GetAll().FirstOrDefault(p=>p.Title.ToLower() == paper.Title.ToLower());
+                return _paper == null? false: _paper.Id != paper.Id;               
+            }         
         }
     }
 }
