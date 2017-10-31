@@ -18,10 +18,12 @@ export class DashboardFilterComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+        this.params.documentType = 0;
     }
 
     clear(): void {
         this.params = new PaperArchive();
+        this.params.documentType = 0;
     }
     filter(): void {
         this.onFilter.emit(this.params);
