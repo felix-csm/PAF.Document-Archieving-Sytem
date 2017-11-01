@@ -69,7 +69,7 @@ namespace PAF.DAS.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]PaperArchiveModel value)
         {
-            if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null))
+            if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null) && (value.DocumentType != DocumentType.None))
             {
                 var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
                 if (!ValidateTitle(paper.Title))
@@ -103,7 +103,7 @@ namespace PAF.DAS.WebAPI.Controllers
                     }
                     else
                     {
-                        return BadRequest("Adding paper that are already exist is not permitted.");
+                        return BadRequest("Paper does not exist");
                     }
                 }
                 else
@@ -121,7 +121,7 @@ namespace PAF.DAS.WebAPI.Controllers
         public IActionResult Put(Guid id, [FromBody]PaperArchiveModel value)
         {
             var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
-            if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null))
+            if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null) && (value.DocumentType != DocumentType.None))
             {
                 var result = _paperService.Update(paper);
                 if (result != null)
