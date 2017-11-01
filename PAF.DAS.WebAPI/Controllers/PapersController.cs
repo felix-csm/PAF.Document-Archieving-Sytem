@@ -72,7 +72,7 @@ namespace PAF.DAS.WebAPI.Controllers
             if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null) && (value.DocumentType != DocumentType.None))
             {
                 var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
-                if (!ValidateTitle(paper.Title))
+                if (!ValidateTitle(paper))
                 {
                     var result = _paperService.Add(paper);
                     if (result != null)
@@ -123,14 +123,21 @@ namespace PAF.DAS.WebAPI.Controllers
             var paper = _mapper.Map<PaperArchiveModel, Paper>(value);
             if ((value.Title != null) && (value.Author != null) && (value.YearSubmitted != null) && (value.DocumentType != DocumentType.None))
             {
-                var result = _paperService.Update(paper);
-                if (result != null)
+                if (!ValidateTitle(paper))
                 {
-                    return Ok(result);
+                    var result = _paperService.Update(paper);
+                    if (result != null)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return StatusCode(404);
+                    }
                 }
                 else
                 {
-                    return StatusCode(404);
+                    return BadRequest("Adding paper that are already exist is not permitted.");
                 }
             }
             else
@@ -139,9 +146,10 @@ namespace PAF.DAS.WebAPI.Controllers
             }
         }
 
-        private bool ValidateTitle(string title)
+        private bool ValidateTitle(Paper paper)
         {
-            return _paperService.GetAll().Any(p => p.Title.ToLower() == title.ToLower());
+            var _paper = _paperService.GetAll().FirstOrDefault(p => p.Title.ToLower() == paper.Title.ToLower());
+            return _paper == null ? false : _paper.Id != paper.Id;
         }
     }
 }
