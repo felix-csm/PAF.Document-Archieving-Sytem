@@ -16,8 +16,11 @@ import { AuthComponent } from './components/security/auth-login.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './components/security/auth-interceptor';
+
 import { CurrentUserSvc } from './services/current-user.service';
 import { AuthSvc } from './services/auth.service';
+import { PaperArchiveSvc } from './services/paper-archive.service';
+import { FileSvc } from './services/file.service';
 
 @NgModule({
     declarations: [
@@ -42,7 +45,9 @@ import { AuthSvc } from './services/auth.service';
         multi: true
     },
         CurrentUserSvc,
-        AuthSvc
+        AuthSvc,
+        PaperArchiveSvc,
+        FileSvc
     ],
     bootstrap: [
         AppComponent

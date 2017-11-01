@@ -13,8 +13,7 @@ import { PaperArchive } from '../../models/paper-archive';
 
 @Component({
     selector: 'app-paper-archive',
-    templateUrl: './paper-archive.component.html',
-    providers: [PaperArchiveSvc, FileSvc]
+    templateUrl: './paper-archive.component.html'
 })
 
 export class PaperArchiveComponent implements OnInit {

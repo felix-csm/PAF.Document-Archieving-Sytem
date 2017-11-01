@@ -1,17 +1,18 @@
-<div class="navbar navbar-default navbar-fixed-top">
-  <app-header></app-header>
-</div>
-<div class="container body-content">
-  <div class="container">
-    <div class="row col-lg-12">
-      <div class="page-header">
+<div class="main">
+  <div id="header"></div>
+  <div class="navbar navbar-default">
+    <app-header></app-header>
+  </div>
+  <div class="container body-content">
+    <div class="container">
+      <div class="row col-lg-12">
+        <router-outlet></router-outlet>
       </div>
-      <router-outlet></router-outlet>
     </div>
   </div>
-</div>
-<div class="navbar-fixed-bottom footer">
-  <footer>
-    <p class="pull-right footer-txt">&copy; 2017 - AETDC Research Portal, Inc.</p>
-  </footer>
+  <div class="navbar-fixed-bottom footer">
+    <footer>
+      <p class="pull-right footer-txt">&copy; 2017 - AETDC Research Portal, Inc.</p>
+    </footer>
+  </div>
 </div>

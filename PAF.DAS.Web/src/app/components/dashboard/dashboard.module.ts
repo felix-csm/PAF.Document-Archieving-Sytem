@@ -18,9 +18,6 @@ import { DashboardFilterComponent } from './dashboard-filter/dashboard-filter.co
     declarations: [
         DashboardComponent,
         DashboardFilterComponent
-    ],
-    providers: [
-
     ]
 })
 

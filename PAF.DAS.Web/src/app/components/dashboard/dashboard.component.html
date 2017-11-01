@@ -5,10 +5,10 @@
     </div>
     <div class="col-lg-9">
       <div class="col-md-12">
-        <div class="page-header">
+        <div>
           <h3>
             <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Paper Archives
-            <p class="pull-right">
+            <p class="pull-right" *ngIf="currentUser.isAdmin">
               <button class="btn btn-default" routerLink="/new-paper">
                 <i class="glyphicon glyphicon-plus"></i>
               </button>
@@ -22,11 +22,11 @@
             </span>
           </div>
           <div class="col-sm-6" *ngFor="let item of items">
-            <div class="list-group-item">
+            <div class="list-group-item well well-sm">
               <h4 class="list-group-item-heading text-info">
                 <i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;{{item.title}}
                 <p class="pull-right">
-                  <button class="btn btn-primary" routerLink="/papers/{{item.id}}">
+                  <button class="btn btn-primary" routerLink="/papers/{{item.id}}" *ngIf="currentUser.isAdmin">
                     <i class="glyphicon glyphicon-edit"></i>
                   </button>
                   <button class="btn btn-default" (click)="view(item.id, item.title)">
@@ -34,7 +34,7 @@
                   </button>
                 </p>
               </h4>
-              <p class="list-group-item-text">{{item.remarks}}</p>
+              <p class="list-group-item-text text-primary">{{item.remarks}}</p>
               <p class="list-group-item-text">
                 <small>
                   <div ngSwitch="{{item.documentType}}">

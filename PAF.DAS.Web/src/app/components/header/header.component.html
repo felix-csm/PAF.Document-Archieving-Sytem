@@ -15,27 +15,24 @@
       <li>
         <a routerLink="about">About</a>
       </li>
-      <li>
-        <a (click)="logout()">Log Off</a>
-      </li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right" *ngIf="isLoggedIn">
+      <li>
+        <a>
+          <small>{{email}}</small>
+        </a>
+      </li>
       <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" id="user" aria-expanded="false">{{currentUser.email}}  <i class="glyphicon glyphicon-user"></i>
+        <a class="dropdown-toggle" data-toggle="dropdown" id="user" aria-expanded="false">
+          <i class="glyphicon glyphicon-user"></i>
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="user">
           <li>
-            <a routerLink="logout">sdfdsdf</a>
-          </li>
-          <li>
-            <a routerLink="logout">Logout</a>
+            <a (click)="logout()">Sign Off</a>
           </li>
         </ul>
       </li>
     </ul>
-  </div>
-  <div class="container">
-    <h5 class="text-muted">PAF Document Archiving System</h5>
   </div>
 </div>

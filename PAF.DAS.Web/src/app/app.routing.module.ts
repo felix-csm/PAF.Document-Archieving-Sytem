@@ -10,7 +10,7 @@ import { AuthGuard } from './components/security/auth-guard';
 
 const _routes: Routes = [{
     path: '',
-    redirectTo: '/login',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
 }, {
     path: 'login',

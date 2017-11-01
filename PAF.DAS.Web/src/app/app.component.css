@@ -1,0 +1,27 @@
+#header {
+    background-image: url(../assets/Images/Header.jpg);
+    width: 1200px;
+    height: 200px;
+    margin-top: 0px;
+    padding: 0;
+}
+.main {
+    margin-inline-start: middle;
+    width: 1200px;
+    text-align: left;
+    margin: 0 auto;
+    padding: 0 auto;
+}
+.body-content {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.login {
+    margin-top: 15px !important;
+    background-image: url(../assets/images/backdrop.jpg);
+    background-repeat: no-repeat;
+    background-blend-mode: screen;
+}

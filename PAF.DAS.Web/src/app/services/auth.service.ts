@@ -8,6 +8,7 @@ import { PaperArchive } from '../models/paper-archive';
 import 'rxjs/add/operator/toPromise';
 import { Login } from '../models/login';
 import { CurrentUser } from '../models/current-user';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthSvc {
@@ -15,18 +16,16 @@ export class AuthSvc {
         private http: HttpClient
     ) { }
 
-    signIn(login: Login): Promise<any> {
+    signIn(login: Login): Observable<any> {
         const url = `${AppSettings.API_URL}/user/sign-in`;
-        return this.http.post(url, login)
-            .toPromise()
-            .then(response => response as any)
-            .catch(this.handleError);
+        return this.http.post(url, login);
     }
 
-    signOut() {
+    signOut(): Promise<any> {
         const url = `${AppSettings.API_URL}/user/sign-out`;
         return this.http.get(url)
             .toPromise()
+            .then()
             .catch(this.handleError);
     }
 

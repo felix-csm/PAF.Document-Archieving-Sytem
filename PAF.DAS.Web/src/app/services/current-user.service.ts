@@ -2,13 +2,31 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CurrentUser } from '../models/current-user';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class CurrentUserSvc {
-    _currentUser = new BehaviorSubject<CurrentUser>(new CurrentUser());
+    private _currentUser = new BehaviorSubject<CurrentUser>(new CurrentUser());
 
-    setCurrentUser(token: string) {
+    get currentUser$() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const tokenData = token.split('.')[1];
+            const jsonData = JSON.parse(window.atob(tokenData));
+
+            const newUser = new CurrentUser();
+            newUser.id = jsonData.id;
+            newUser.email = jsonData.email;
+            newUser.isAdmin = jsonData.isAdmin;
+
+            this._currentUser.next(newUser);
+        }
+        return this._currentUser.asObservable();
+    }
+
+    setToken(token: string) {
         localStorage.setItem('token', token);
+
         const tokenData = token.split('.')[1];
         const jsonData = JSON.parse(window.atob(tokenData));
 
@@ -18,10 +36,6 @@ export class CurrentUserSvc {
         newUser.isAdmin = jsonData.isAdmin;
 
         this._currentUser.next(newUser);
-    }
-
-    get currentUser(): Observable<CurrentUser> {
-        return this._currentUser.asObservable();
     }
 
     signOut(): void {

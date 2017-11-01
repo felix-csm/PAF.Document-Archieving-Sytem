@@ -1,7 +1,7 @@
-<div class="row" style="margin-top: 150px;">
-  <div class="col-md-3"></div>
-  <div class="card col-md-6">
-    <div class="card-body well">
+<div class="row login">
+  <div class="col-md-8"></div>
+  <div class="card col-md-4">
+    <div class="card-body well" style="margin-top: 15px">
       <h3 class="card-title">
         <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Authentication</h3>
       <hr/>
@@ -36,7 +36,7 @@
           </div>
           <div class="list-group-item">
             <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!loginForm.valid && (loginForm.dirty || loginForm.touched)">
-              SIGN-IN
+              SIGN IN
               <i class="glyphicon glyphicon-chevron-right"></i>
             </button>
           </div>
@@ -44,5 +44,4 @@
       </form>
     </div>
   </div>
-  <div class="col-md-3"></div>
 </div>
