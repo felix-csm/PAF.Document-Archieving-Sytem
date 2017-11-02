@@ -34,31 +34,6 @@ namespace PAF.DAS.WebAPI.Controllers
             _options = optionsAccessor.Value;
         }
 
-        //[HttpPut("reset")]
-        //public async Task<IActionResult> Reset([FromBody] PasswordResetModel credentials)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-        //        var result = await _userManager.ChangePasswordAsync(currentUser, credentials.CurrentPassword, credentials.NewPassword);
-        //        if (result.Succeeded)
-        //        {
-        //            await _signInManager.SignInAsync(currentUser, isPersistent: false);
-        //            var user = await _userManager.FindByEmailAsync(credentials.Email);
-        //            var roles = await _userManager.GetRolesAsync(user);
-        //            return new JsonResult(new CurrentUserModel
-        //            {
-        //                Email = credentials.Email,
-        //                Token = GetAccessToken(user, roles[0]),
-        //                Roles = roles[0]
-        //            });
-        //        }
-        //        return Errors(result);
-
-        //    }
-        //    return Error("Unexpected error");
-        //}
-
         [HttpPost("sign-in")]
         public async Task<IActionResult> SignIn([FromBody] LoginModel credentials)
         {
