@@ -13,10 +13,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { AboutComponent } from './components/about/about.component';
 import { PaperArchiveComponent } from './components/paper-archive/paper-archive.component';
 import { AuthComponent } from './components/security/auth-login.component';
+import { UserListComponent } from './components/security/user/user-list.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './components/security/auth-interceptor';
 
+import { UserSvc } from './services/user.service';
 import { CurrentUserSvc } from './services/current-user.service';
 import { AuthSvc } from './services/auth.service';
 import { PaperArchiveSvc } from './services/paper-archive.service';
@@ -28,7 +30,8 @@ import { FileSvc } from './services/file.service';
         HeaderComponent,
         AboutComponent,
         PaperArchiveComponent,
-        AuthComponent
+        AuthComponent,
+        UserListComponent
     ],
     imports: [
         BrowserModule,
@@ -47,7 +50,8 @@ import { FileSvc } from './services/file.service';
         CurrentUserSvc,
         AuthSvc,
         PaperArchiveSvc,
-        FileSvc
+        FileSvc,
+        UserSvc
     ],
     bootstrap: [
         AppComponent

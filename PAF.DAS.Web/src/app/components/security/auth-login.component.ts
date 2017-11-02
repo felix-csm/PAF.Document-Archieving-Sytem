@@ -30,10 +30,10 @@ export class AuthComponent {
 
     onSubmit(login) {
         this.authSvc.signIn(this.model)
-        .subscribe(response => {
-            this.currentUserSvc.setToken(response.access_token);
-            this.redirectToHome();
-        }, error => this.errorMessage = <any>error);
+            .then(response => {
+                this.currentUserSvc.setToken(response.access_token);
+                this.redirectToHome();
+            }, error => this.errorMessage = <any>error);
     }
 
     redirectToHome() {

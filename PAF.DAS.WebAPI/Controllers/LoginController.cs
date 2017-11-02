@@ -1,18 +1,16 @@
-﻿using System;
+﻿using JWT;
+using JWT.Algorithms;
+using JWT.Serializers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using PAF.DAS.Service.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PAF.DAS.Service.Model;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using JWT.Algorithms;
-using JWT;
-using JWT.Serializers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
@@ -49,9 +47,9 @@ namespace PAF.DAS.WebAPI.Controllers
                         access_token = GetAccessToken(user, roles[0]),
                     });
                 }
-                return new JsonResult("Unable to sign in.") { StatusCode = 401 };
+                return new UnauthorizedResult();
             }
-            return new JsonResult("Unable to sign in.") { StatusCode = 401 };
+            return new UnauthorizedResult();
         }
 
         [HttpGet("sign-out")]
@@ -88,19 +86,6 @@ namespace PAF.DAS.WebAPI.Controllers
             IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
 
             return encoder.Encode(payload, secret);
-        }
-
-        private JsonResult Errors(IdentityResult result)
-        {
-            var items = result.Errors
-                .Select(x => x.Description)
-                .ToArray();
-            return new JsonResult(items) { StatusCode = 400 };
-        }
-
-        private JsonResult Error(string message)
-        {
-            return new JsonResult(message) { StatusCode = 400 };
         }
 
         private static double ConvertToUnixTimestamp(DateTime date)

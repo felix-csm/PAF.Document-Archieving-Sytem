@@ -5,6 +5,7 @@ import { AboutComponent } from './components/about/about.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PaperArchiveComponent } from './components/paper-archive/paper-archive.component';
 import { AuthComponent } from './components/security/auth-login.component';
+import { UserListComponent } from './components/security/user/user-list.component';
 
 import { AuthGuard } from './components/security/auth-guard';
 
@@ -29,6 +30,10 @@ const _routes: Routes = [{
 }, {
     path: 'papers/:id',
     component: PaperArchiveComponent,
+    canActivate: [AuthGuard]
+}, {
+    path: 'users',
+    component: UserListComponent,
     canActivate: [AuthGuard]
 }, {
     path: 'about',

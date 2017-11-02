@@ -16,9 +16,12 @@ export class AuthSvc {
         private http: HttpClient
     ) { }
 
-    signIn(login: Login): Observable<any> {
+    signIn(login: Login): Promise<any> {
         const url = `${AppSettings.API_URL}/user/sign-in`;
-        return this.http.post(url, login);
+        return this.http.post(url, login)
+            .toPromise()
+            .then()
+            .catch(this.handleError);;
     }
 
     signOut(): Promise<any> {
@@ -31,6 +34,9 @@ export class AuthSvc {
 
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
+        if (error.status === 401) {
+            return Promise.reject('Unable to log in.');
+        }
         return Promise.reject(error.error || error);
     }
 }

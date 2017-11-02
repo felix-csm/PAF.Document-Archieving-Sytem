@@ -20,8 +20,10 @@
 }
 
 .login {
-    margin-top: 15px !important;
     background-image: url(../assets/images/backdrop.jpg);
     background-repeat: no-repeat;
-    background-blend-mode: screen;
+    background-size: 100%;
+    margin-left: -29px;
+    margin-right: -60px;
+    margin-top: -19px !important;
 }

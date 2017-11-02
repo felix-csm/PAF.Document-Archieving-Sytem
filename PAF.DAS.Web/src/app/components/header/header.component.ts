@@ -16,6 +16,7 @@ export class HeaderComponent implements OnDestroy {
     title = 'header';
     subscription: Subscription;
     isLoggedIn = false;
+    isAdmin = false;
     email: string;
 
     constructor(private router: Router,
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnDestroy {
             value => {
                 this.email = value.email;
                 this.isLoggedIn = !!value.id;
+                this.isAdmin = !!value.isAdmin;
             }
         );
     }
