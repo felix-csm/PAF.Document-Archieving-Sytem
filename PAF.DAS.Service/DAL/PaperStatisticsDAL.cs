@@ -29,7 +29,7 @@ namespace PAF.DAS.Service.DAL
                 }
                 else
                 {
-                    _paperStat.Viewed = downloadedStatistic.Viewed;
+                    _paperStat.Downloaded++;
                     _context.PaperStatistics.Update(_paperStat);
                 }
                 _context.SaveChanges();
@@ -53,7 +53,7 @@ namespace PAF.DAS.Service.DAL
                 }
                 else
                 {
-                    _paperStat.Viewed = viewedStatistic.Viewed;
+                    _paperStat.Viewed++;
                     _context.PaperStatistics.Update(_paperStat);
                 }
                 _context.SaveChanges();
