@@ -17,15 +17,15 @@ namespace PAF.DAS.Service.DAL
             _context = context;
         }
 
-        public PaperStatistic AddDownloaded(PaperStatistic downloadedStatistic)
+        public void AddDownloaded(Guid paperId)
         {
             PaperStatistic _paperStat;
             try
             {
-                _paperStat = _context.PaperStatistics.FirstOrDefault(p => p.PaperId.Equals(downloadedStatistic.PaperId));
+                _paperStat = _context.PaperStatistics.FirstOrDefault(p => p.PaperId.Equals(paperId));
                 if (_paperStat == null)
                 {
-                    _paperStat = Add(downloadedStatistic);
+                    Add(paperId, false);
                 }
                 else
                 {
@@ -33,7 +33,6 @@ namespace PAF.DAS.Service.DAL
                     _context.PaperStatistics.Update(_paperStat);
                 }
                 _context.SaveChanges();
-                return _paperStat;
             }
             catch
             {
@@ -41,15 +40,15 @@ namespace PAF.DAS.Service.DAL
             }
         }
 
-        public PaperStatistic AddViewed(PaperStatistic viewedStatistic)
+        public void AddViewed(Guid paperId)
         {
             PaperStatistic _paperStat;
             try
             {
-                _paperStat = _context.PaperStatistics.FirstOrDefault(p => p.PaperId.Equals(viewedStatistic.PaperId));
+                _paperStat = _context.PaperStatistics.FirstOrDefault(p => p.PaperId.Equals(paperId));
                 if (_paperStat == null)
                 {
-                    _paperStat = Add(viewedStatistic);
+                    Add(paperId, true);
                 }
                 else
                 {
@@ -57,7 +56,6 @@ namespace PAF.DAS.Service.DAL
                     _context.PaperStatistics.Update(_paperStat);
                 }
                 _context.SaveChanges();
-                return _paperStat;
             }
             catch
             {
@@ -77,13 +75,15 @@ namespace PAF.DAS.Service.DAL
             }
         }
 
-        private PaperStatistic Add(PaperStatistic newPaperStat)
+        private void Add(Guid newPaperStatId, bool isViewed)
         {
             try
             {
-                _context.PaperStatistics.Add(newPaperStat);
+                PaperStatistic newpaperStat = new PaperStatistic();
+                newpaperStat.PaperId = newPaperStatId;
+                var result = isViewed ? newpaperStat.Viewed++ : newpaperStat.Downloaded++;
+                _context.PaperStatistics.Add(newpaperStat);
                 _context.SaveChanges();
-                return newPaperStat;
             }
             catch
             {

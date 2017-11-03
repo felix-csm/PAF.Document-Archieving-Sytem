@@ -11,22 +11,39 @@ using System.Linq;
 
 namespace PAF.DAS.WebAPI.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Produces("application/json")]
     [Route("api/papers")]
     public class PapersController : Controller
     {
         private IHostingEnvironment _hostingEnvironment;
-        private readonly IPaperService _paperService;
+        private readonly IPaperService _paperService;        
         private readonly IPaperArchieveService _paperArchiveService;
+        private readonly IPaperStatisticsService _paperStatisticsService;
         private readonly IMapper _mapper;
 
-        public PapersController(IPaperService paperService, IMapper mapper, IPaperArchieveService paperArchiveService, IHostingEnvironment environment)
+        public PapersController(IPaperService paperService, IMapper mapper, IPaperArchieveService paperArchiveService, IPaperStatisticsService paperStatisticsService, IHostingEnvironment environment)
         {
             _paperService = paperService;
             _paperArchiveService = paperArchiveService;
             _mapper = mapper;
             _hostingEnvironment = environment;
+            _paperStatisticsService = paperStatisticsService;
+        }
+
+        [HttpGet, Route("stats")]
+        public IActionResult GetStats()
+        {
+            var result = new List<PaperStatistic>();
+            if (_paperStatisticsService.GetAll().Count < 4)
+            {
+                result = _paperStatisticsService.GetAll().OrderByDescending(o=>o.Viewed).ToList();
+            }
+            else
+            {
+                result = _paperStatisticsService.GetAll().OrderByDescending(o => o.Viewed).Take(3).ToList();
+            }
+            return Ok(result);
         }
 
         // GET api/values
@@ -58,6 +75,7 @@ namespace PAF.DAS.WebAPI.Controllers
             if (result != null)
             {
                 var paper = _mapper.Map<Paper, PaperArchiveModel>(result);
+                _paperStatisticsService.AddViewed(id);
                 return Ok(paper);
             }
             else

@@ -16,11 +16,11 @@ namespace PAF.DAS.Service.BL
             _paperStatisticsDAL = paperStatisticsDAL;
         }
 
-        public PaperStatistic AddDownloaded(PaperStatistic downloadedStatistic)
+        public void AddDownloaded(Guid paperId)
         {
             try
             {
-                return _paperStatisticsDAL.AddDownloaded(downloadedStatistic);
+                _paperStatisticsDAL.AddDownloaded(paperId);
             }
             catch (Exception ex)
             {
@@ -28,11 +28,11 @@ namespace PAF.DAS.Service.BL
             }
         }       
 
-        public PaperStatistic AddViewed(PaperStatistic viewedStatistic)
+        public void AddViewed(Guid paperId)
         {
             try
             {
-                return _paperStatisticsDAL.AddViewed(viewedStatistic);
+                _paperStatisticsDAL.AddViewed(paperId);
             }
             catch (Exception ex)
             {

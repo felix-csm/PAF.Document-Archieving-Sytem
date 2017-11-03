@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PAF.DAS.Service.Interfaces;
+using PAF.DAS.Service.Model;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PAF.DAS.WebAPI.Controllers
@@ -15,14 +18,29 @@ namespace PAF.DAS.WebAPI.Controllers
     {
         private readonly IPaperArchieveService _paperArchieveService;
         private readonly IPaperService _paperService;
+        private readonly IPaperStatisticsService _paperStatisticsService;
         private string _tempPath = "";
 
-        public PaperArchievesController(IPaperArchieveService paperArchieveService, IPaperService paperService)
+        public PaperArchievesController(IPaperArchieveService paperArchieveService, IPaperStatisticsService paperStatisticsService, IPaperService paperService)
         {
             _paperArchieveService = paperArchieveService;
             _paperService = paperService;
-
+            _paperStatisticsService = paperStatisticsService;
             _tempPath = Path.GetTempPath();
+        }
+        [HttpGet, Route("stats")]
+        public IActionResult GetStats()
+        {
+            var result = new List<PaperStatistic>();
+            if (_paperStatisticsService.GetAll().Count < 4)
+            {
+                result = _paperStatisticsService.GetAll().OrderByDescending(o => o.Downloaded).ToList();
+            }
+            else
+            {
+                result = _paperStatisticsService.GetAll().OrderByDescending(o => o.Downloaded).Take(3).ToList();
+            }
+            return Ok(result);
         }
 
         [HttpPost, Route("upload")]
@@ -50,6 +68,7 @@ namespace PAF.DAS.WebAPI.Controllers
             if (result != null)
             {
                 FileInfo file = new FileInfo(result.Location);
+                _paperStatisticsService.AddDownloaded(id);
                 return File(ReadFile(result.Location), "application/pdf");
             }
             else
