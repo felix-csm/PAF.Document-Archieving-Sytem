@@ -1,9 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import * as $ from 'jquery';
-import * as b from 'bootstrap';
 import { UserSvc } from '../../../services/user.service';
 import { ChangePasswordUser } from '../../../models/change-password';
 import { UserInfo } from '../../../models/user-info';
@@ -17,6 +15,7 @@ export class UserListComponent implements OnInit {
     users: UserInfo[];
     current: ChangePasswordUser;
     errorMessage: string;
+    modalDisplay: string;
 
     constructor(
         private userSvc: UserSvc,
@@ -24,6 +23,7 @@ export class UserListComponent implements OnInit {
         this.current = new ChangePasswordUser();
         this.current.oldPassword = '';
         this.current.newPassword = '';
+        this.modalDisplay = 'none';
     }
 
     private populate() {
@@ -34,15 +34,22 @@ export class UserListComponent implements OnInit {
             error => this.errorMessage = <any>error);
     }
 
+    cancel() {
+        this.current = new ChangePasswordUser();
+        this.current.oldPassword = '';
+        this.current.newPassword = '';
+        this.modalDisplay = 'none';
+    }
+
     select(user: ChangePasswordUser): void {
         this.current = user;
+        this.modalDisplay = 'block';
     }
 
     update(): void {
         this.userSvc.changePassword(this.current).then(
             response => {
-                //TODO: need to call the modal hide manually here
-                //$(this.myModal.nativeElement).modal('show');
+                this.cancel();
             },
             error => this.errorMessage = <any>error);
     }

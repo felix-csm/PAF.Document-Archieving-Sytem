@@ -24,6 +24,11 @@ export class UserSvc {
 
     changePassword(user: ChangePasswordUser): Promise<ChangePasswordUser> {
         const url = `${AppSettings.API_URL}/users/${user.id}/reset`;
+        // return new Promise<ChangePasswordUser>((resolve, reject) => {
+        //     setTimeout(function(){
+        //       resolve(new ChangePasswordUser()); // Yay! Everything went well!
+        //     }, 250);
+        // });
         return this.http.put(url, user)
             .toPromise()
             .catch(this.handleError);

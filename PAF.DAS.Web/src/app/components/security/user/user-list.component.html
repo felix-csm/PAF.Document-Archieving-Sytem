@@ -15,7 +15,7 @@
           <tr *ngFor="let user of users">
             <td>{{user.email}}</td>
             <td>
-              <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#changePasswordModal" (click)="select(user)">
+              <button type="button" class="btn btn-sm btn-info" (click)="select(user)">
                 <i class="glyphicon glyphicon-asterisk"></i>
                 <i class="glyphicon glyphicon-asterisk"></i>
               </button>
@@ -27,12 +27,13 @@
     <div class="col-md-2"></div>
   </div>
 </div>
-<div id="changePasswordModal" class="modal" #changePasswordModal >
+<div class="modal-backdrop in" [ngStyle]="{'display': modalDisplay}"></div>
+<div id="changePasswordModal" class="modal" [ngStyle]="{'display': modalDisplay}">
   <form #changeForm="ngForm">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <button type="button" class="close" (click)="cancel()" id="closeBtn">×</button>
           <h4 class="modal-title">Reset Password</h4>
         </div>
         <div class="modal-body">
@@ -68,7 +69,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" (click)="cancel()" class="btn btn-default" data-dismiss="modal">
+          <button type="button" (click)="cancel()" class="btn btn-default">
               <i class="glyphicon glyphicon-cancel"></i> CANCEL</button>
             <button type="button" (click)="update()" class="btn btn-primary" [disabled]="!changeForm.valid && (changeForm.dirty || changeForm.untouched)">
               <i class="glyphicon glyphicon-save"></i> SAVE</button>
