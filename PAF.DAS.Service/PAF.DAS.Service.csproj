@@ -185,21 +185,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\PaperStatisticsService.cs" />
     <Compile Include="BL\PaperArchieveService.cs" />
     <Compile Include="BL\PaperService.cs" />
     <Compile Include="DAL\DBInitializer.cs" />
+    <Compile Include="DAL\PaperStatisticsDAL.cs" />
     <Compile Include="Interfaces\IDbInitializer.cs" />
     <Compile Include="DAL\PaperArchieveDAL.cs" />
     <Compile Include="DAL\PaperDAL.cs" />
     <Compile Include="BL\PaperValidator.cs" />
     <Compile Include="Interfaces\IPaperArchieveDAL.cs" />
     <Compile Include="Interfaces\IPaperArchieveService.cs" />
+    <Compile Include="Interfaces\IPaperStatisticsService.cs" />
+    <Compile Include="Interfaces\IPaperStatisticsDAL.cs" />
     <Compile Include="Interfaces\IPaperDAL.cs" />
     <Compile Include="Interfaces\IPaperService.cs" />
     <Compile Include="Model\ApplicationDbContext.cs" />
     <Compile Include="Model\ApplicationUser.cs" />
     <Compile Include="Model\Credentials.cs" />
     <Compile Include="Model\Paper.cs" />
+    <Compile Include="Model\PaperStatistic.cs" />
     <Compile Include="Model\PaperArchieve.cs" />
     <Compile Include="Model\UserDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

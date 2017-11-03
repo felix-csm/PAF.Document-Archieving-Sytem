@@ -55,6 +55,8 @@ namespace PAF.DAS.WebAPI
             services.AddTransient<IPaperService, PaperService>();
             services.AddTransient<IPaperArchieveDAL, PaperArchieveDAL>();
             services.AddTransient<IPaperArchieveService, PaperArchieveService>();
+            services.AddTransient<IPaperStatisticsDAL, PaperStatisticsDAL>();
+            services.AddTransient<IPaperStatisticsService, PaperStatisticsService>();
 
             services.AddScoped<IDbInitializer, DbInitializer>();
 

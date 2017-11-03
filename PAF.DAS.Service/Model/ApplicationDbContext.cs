@@ -17,6 +17,7 @@ namespace PAF.DAS.Service.Model
 
         public virtual DbSet<Paper> Papers { get; set; }
         public virtual DbSet<PaperArchieve> PaperArchieves { get; set; }
+        public virtual DbSet<PaperStatistic> PaperStatistics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
