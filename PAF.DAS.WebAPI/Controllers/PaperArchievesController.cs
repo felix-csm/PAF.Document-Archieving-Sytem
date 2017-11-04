@@ -38,9 +38,14 @@ namespace PAF.DAS.WebAPI.Controllers
             }
             else
             {
-                result = _paperStatisticsService.GetAll().OrderByDescending(o => o.Downloaded).Take(3).ToList();
+                result = _paperStatisticsService.GetAll().OrderByDescending(o => o.Downloaded).Take(2).ToList();
             }
-            return Ok(result);
+            var list = result.Join(
+                    _paperService.GetAll(),
+                    stat => stat.PaperId,
+                    paper => paper.Id,
+                    (stat, paper) => new { Paper = paper, PaperStatistic = stat });
+            return Ok(list);
         }
 
         [HttpPost, Route("upload")]

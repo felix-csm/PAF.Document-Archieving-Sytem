@@ -20,6 +20,13 @@ export class PaperArchiveSvc {
             .then(response => response as PaperArchive)
             .catch(this.handleError);
     }
+    getViewedStats(): Promise<PaperArchive[]> {
+        const url = `${AppSettings.API_URL}/papers/stats`;
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response as PaperArchive[])
+            .catch(this.handleError);
+    }
 
     add(paperArchive: PaperArchive): Promise<PaperArchive> {
         const url = `${AppSettings.API_URL}/papers`;

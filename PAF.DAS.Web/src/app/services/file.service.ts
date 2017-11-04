@@ -55,7 +55,13 @@ export class FileSvc {
             () => console.log('OK!')
             );
     }
-
+    getDownloadedStats(): Promise<PaperArchive[]> {
+        const url = `${AppSettings.API_URL}/paperarchives/stats`;
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response as PaperArchive[])
+            .catch(this.handleError);
+    }
     private downloadFile(data: Blob, name: string): void {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(data);

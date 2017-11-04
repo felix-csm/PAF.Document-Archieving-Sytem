@@ -14,6 +14,8 @@ import { CurrentUser } from '../../models/current-user';
 export class DashboardComponent implements OnInit {
     name = 'Dashboard';
     items: PaperArchive[];
+    itemViewedStats: PaperArchive[];
+    itemDownLoadedStats: PaperArchive[];
     errorMessage: string;
     params: PaperArchive = new PaperArchive();
     currentUser: CurrentUser;
@@ -38,6 +40,23 @@ export class DashboardComponent implements OnInit {
             error => this.errorMessage = <any>error);
     }
 
+    private showViewedStats()
+    {
+        this.paperArchiveSvc.getViewedStats().then(
+            response => {
+                this.itemViewedStats = response;
+            },
+            error => this.errorMessage = <any>error);
+    }
+    private showDownloadedStats()
+    {
+        this.fileSvc.getDownloadedStats().then(
+            response => {
+                this.itemDownLoadedStats = response;
+            },
+            error => this.errorMessage = <any>error);
+    }
+
     filter(searchParams: PaperArchive): void {
         this.params = searchParams;
         this.populate();
@@ -45,9 +64,13 @@ export class DashboardComponent implements OnInit {
 
     view(id: string, name: string): void {
         this.fileSvc.viewFile(id, name);
+        this.showViewedStats();
+        this.showDownloadedStats();
     }
 
     ngOnInit() {
         this.populate();
+        this.showViewedStats();
+        this.showDownloadedStats();
     }
 }

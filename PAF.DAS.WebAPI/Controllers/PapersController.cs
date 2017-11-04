@@ -37,13 +37,18 @@ namespace PAF.DAS.WebAPI.Controllers
             var result = new List<PaperStatistic>();
             if (_paperStatisticsService.GetAll().Count < 4)
             {
-                result = _paperStatisticsService.GetAll().OrderByDescending(o=>o.Viewed).ToList();
+                result = _paperStatisticsService.GetAll().OrderByDescending(o=>o.Viewed).ToList();                
             }
             else
             {
-                result = _paperStatisticsService.GetAll().OrderByDescending(o => o.Viewed).Take(3).ToList();
+                result = _paperStatisticsService.GetAll().OrderByDescending(o => o.Viewed).Take(2).ToList();
             }
-            return Ok(result);
+            var list = result.Join(
+                    _paperService.GetAll(),
+                    stat => stat.PaperId,
+                    paper => paper.Id,
+                    ( stat, paper) => new { Paper = paper, PaperStatistic = stat });
+            return Ok(list);
         }
 
         // GET api/values
