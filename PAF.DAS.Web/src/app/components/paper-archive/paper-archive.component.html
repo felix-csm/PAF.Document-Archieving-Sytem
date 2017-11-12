@@ -15,7 +15,7 @@
         <div class="form-group">
           <label class="control-label" for="title">Title</label>
           <input class="form-control" id="title" name="title" type="text" [(ngModel)]="model.title" placeholder="[Title]" #title="ngModel"
-            required />
+            required maxlength="500"/>
           <div *ngIf="!title.valid && (title.dirty || title.touched)" class="text-warning">
             <small *ngIf="title.errors.required">
               Please enter the title.
@@ -39,7 +39,7 @@
         <div class="form-group">
           <label class="control-label" for="author">Author</label>
           <input class="form-control" id="author" name="author" type="text" [(ngModel)]="model.author" placeholder="[Author]" #author="ngModel"
-            required/>
+            required maxlength="100"/>
           <div *ngIf="!author.valid && (author.dirty || author.touched)" class="text-warning">
             <small *ngIf="author.errors.required">
               Please enter the author.
@@ -49,7 +49,7 @@
         <div class="form-group">
           <label class="control-label" for="yearSubmitted">Year Submitted</label>
           <input class="form-control" id="yearSubmitted" name="yearSubmitted" type="text" [(ngModel)]="model.yearSubmitted" placeholder="[Year Submitter]"
-            #yearSubmitted="ngModel" required/>
+            #yearSubmitted="ngModel" required maxlength="4"/>
           <div *ngIf="!yearSubmitted.valid && (yearSubmitted.dirty || yearSubmitted.touched)" class="text-warning">
             <small *ngIf="yearSubmitted.errors.required">
               Please enter the year submitted.
@@ -72,7 +72,7 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="remarks">Remarks</label>
-          <textarea class="form-control" name="remarks" type="text" [(ngModel)]="model.remarks" style="resize: none;" placeholder="[Remarks]"></textarea>
+          <textarea class="form-control" name="remarks" type="text" [(ngModel)]="model.remarks" style="resize: none;" placeholder="[Remarks]" maxlength="1000"></textarea>
         </div>
         <div class="form-group pull-right">
           <button type="button" (click)="cancel()" class="btn btn-default">

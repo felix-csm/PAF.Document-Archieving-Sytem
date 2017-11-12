@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <div class="well well-md">
           <i class="glyphicon glyphicon-eye-open"></i>&nbsp;&nbsp;Most Viewed<span class="pull-right">Hits</span>
           <div class="list-group" *ngFor="let itemViewed of itemViewedStats">
@@ -11,21 +11,21 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <div class="well well-md">
           <i class="glyphicon glyphicon-eye-open"></i>&nbsp;&nbsp;Most Downloaded<span class="pull-right">Hits</span>
           <div class="list-group" *ngFor="let itemDownloaded of itemDownLoadedStats">
             <a routerLink="/papers/{{itemDownloaded.paper.id}}" class="list-group-item  list-group-item-action" title="{{itemDownloaded.paper.title}}">
-              {{itemDownloaded.paper.title}}<span class="pull-right">|&nbsp;&nbsp;&nbsp;{{itemDownloaded.paperStatistic.downloaded}}</span>       
+              {{itemDownloaded.paper.title}}<span class="pull-right">|&nbsp;&nbsp;&nbsp;{{itemDownloaded.paperStatistic.downloaded}}</span>
             </a>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-3">
+    <div class="col-md-3">
       <app-dashboard-filter (onFilter)="filter($event)"></app-dashboard-filter>
     </div>
-    <div class="col-lg-9">
+    <div class="col-md-9">
       <div class="col-md-12">
         <h3>
           <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Paper Archives
@@ -42,18 +42,18 @@
               No records found.
             </span>
           </div>
-          <div class="col-sm-6" *ngFor="let item of items">
+          <div class="col-sm-12" *ngFor="let item of items">
             <div class="list-group-item">
               <h4 class="list-group-item-heading text-info">
-                <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;{{item.title}}
-                <p class="pull-right">
+                <span style="margin-right: 80px; display: inline-block;"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;{{item.title}}</span>
+                <span class="pull-right">
                   <button class="btn btn-primary" routerLink="/papers/{{item.id}}" *ngIf="currentUser.isAdmin" title="Edit Paper Info">
                     <i class="glyphicon glyphicon-edit"></i>
                   </button>
                   <button class="btn btn-default" (click)="view(item.id, item.title)" title="View Paper">
                     <i class="glyphicon glyphicon-eye-open"></i>
                   </button>
-                </p>
+                </span>
               </h4>
               <p class="list-group-item-text text-primary">{{item.remarks}}</p>
               <p class="list-group-item-text">
