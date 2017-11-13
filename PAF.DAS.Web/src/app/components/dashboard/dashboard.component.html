@@ -2,21 +2,21 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="col-sm-6">
-        <div class="well well-md">
+        <div class="well well-sm">
           <i class="glyphicon glyphicon-eye-open"></i>&nbsp;&nbsp;Most Viewed<span class="pull-right">Hits</span>
           <div class="list-group" *ngFor="let itemViewed of itemViewedStats">
             <a routerLink="/papers/{{itemViewed.paper.id}}" class="list-group-item  list-group-item-action" title="{{itemViewed.paper.title}}">
-              {{itemViewed.paper.title}}<span class="pull-right">|&nbsp;&nbsp;&nbsp;{{itemViewed.paperStatistic.viewed}}</span>
+              {{itemViewed.paper.title}}<span class="pull-right badge">{{itemViewed.paperStatistic.viewed}}</span>
             </a>
           </div>
         </div>
       </div>
       <div class="col-sm-6">
-        <div class="well well-md">
+        <div class="well well-sm">
           <i class="glyphicon glyphicon-eye-open"></i>&nbsp;&nbsp;Most Downloaded<span class="pull-right">Hits</span>
           <div class="list-group" *ngFor="let itemDownloaded of itemDownLoadedStats">
             <a routerLink="/papers/{{itemDownloaded.paper.id}}" class="list-group-item  list-group-item-action" title="{{itemDownloaded.paper.title}}">
-              {{itemDownloaded.paper.title}}<span class="pull-right">|&nbsp;&nbsp;&nbsp;{{itemDownloaded.paperStatistic.downloaded}}</span>
+              {{itemDownloaded.paper.title}}<span class="pull-right badge">{{itemDownloaded.paperStatistic.downloaded}}</span>
             </a>
           </div>
         </div>
