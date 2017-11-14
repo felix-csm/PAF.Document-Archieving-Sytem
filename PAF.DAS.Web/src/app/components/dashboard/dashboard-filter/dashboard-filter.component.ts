@@ -28,4 +28,8 @@ export class DashboardFilterComponent implements OnInit {
     filter(): void {
         this.onFilter.emit(this.params);
     }
+    OnKeyPressSearch(): void
+    {
+        this.onFilter.emit(this.params);
+    }
 }
