@@ -20,7 +20,16 @@ export class PaperArchiveSvc {
             .then(response => response as PaperArchive)
             .catch(this.handleError);
     }
-    getViewedStats(): Promise<PaperArchive[]> {
+
+    like(id: string): Promise<PaperArchive> {
+        const url = `${AppSettings.API_URL}/papers/like/${id}`;
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response as PaperArchive)
+            .catch(this.handleError);
+    }
+
+    getLikedStats(): Promise<PaperArchive[]> {
         const url = `${AppSettings.API_URL}/papers/stats`;
         return this.http.get(url)
             .toPromise()

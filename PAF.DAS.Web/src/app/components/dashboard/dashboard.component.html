@@ -3,7 +3,7 @@
     <div class="col-sm-12">
       <div class="col-sm-6">
         <div class="well well-sm">
-          <i class="glyphicon glyphicon-eye-open"></i>&nbsp;&nbsp;Most Viewed<span class="pull-right">Hits</span>
+          <i class="glyphicon glyphicon-thumbs-up"></i>&nbsp;&nbsp;Most Liked
           <div class="list-group" *ngFor="let itemViewed of itemViewedStats">
             <a routerLink="/papers/{{itemViewed.paper.id}}" class="list-group-item  list-group-item-action" title="{{itemViewed.paper.title}}">
               {{itemViewed.paper.title.length > 20 ? (itemViewed.paper.title | slice:0:72)+'...' : itemViewed.paper.title}}<span class="pull-right badge">{{itemViewed.paperStatistic.viewed}}</span>
@@ -13,7 +13,7 @@
       </div>
       <div class="col-sm-6">
         <div class="well well-sm">
-          <i class="glyphicon glyphicon-eye-open"></i>&nbsp;&nbsp;Most Downloaded<span class="pull-right">Hits</span>
+          <i class="glyphicon glyphicon-paperclip"></i>&nbsp;&nbsp;Most Downloaded
           <div class="list-group" *ngFor="let itemDownloaded of itemDownLoadedStats">
             <a routerLink="/papers/{{itemDownloaded.paper.id}}" class="list-group-item  list-group-item-action" title="{{itemDownloaded.paper.title}}">
               {{itemDownloaded.paper.title.length > 20 ? (itemDownloaded.paper.title | slice:0:72)+'...' : itemDownloaded.paper.title}}<span class="pull-right badge">{{itemDownloaded.paperStatistic.downloaded}}</span>
@@ -47,11 +47,14 @@
               <h4 class="list-group-item-heading text-info">
                 <span style="margin-right: 80px; display: inline-block;"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;{{item.title}}</span>
                 <span class="pull-right">
+                    <button class="btn btn-info" (click)="like(item.id)" title="Like">
+                      <i class="glyphicon glyphicon-thumbs-up"></i>
+                    </button>
                   <button class="btn btn-primary" routerLink="/papers/{{item.id}}" *ngIf="currentUser.isAdmin" title="Edit Paper Info">
                     <i class="glyphicon glyphicon-edit"></i>
                   </button>
-                  <button class="btn btn-default" (click)="view(item.id, item.title)" title="View Paper">
-                    <i class="glyphicon glyphicon-eye-open"></i>
+                  <button class="btn btn-warning" (click)="view(item.id, item.title)" title="Download Paper">
+                    <i class="glyphicon glyphicon-paperclip"></i>
                   </button>
                 </span>
               </h4>

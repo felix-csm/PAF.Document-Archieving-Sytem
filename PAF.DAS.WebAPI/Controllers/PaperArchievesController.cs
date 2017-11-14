@@ -32,7 +32,7 @@ namespace PAF.DAS.WebAPI.Controllers
         public IActionResult GetStats()
         {
             var result = new List<PaperStatistic>();
-            if (_paperStatisticsService.GetAll().Count < 4)
+            if (_paperStatisticsService.GetAll().Count < 3)
             {
                 result = _paperStatisticsService.GetAll().OrderByDescending(o => o.Downloaded).ToList();
             }

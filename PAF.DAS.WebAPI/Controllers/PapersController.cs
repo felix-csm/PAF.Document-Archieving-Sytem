@@ -35,7 +35,7 @@ namespace PAF.DAS.WebAPI.Controllers
         public IActionResult GetStats()
         {
             var result = new List<PaperStatistic>();
-            if (_paperStatisticsService.GetAll().Count < 4)
+            if (_paperStatisticsService.GetAll().Count < 3)
             {
                 result = _paperStatisticsService.GetAll().OrderByDescending(o=>o.Viewed).ToList();                
             }
@@ -80,7 +80,6 @@ namespace PAF.DAS.WebAPI.Controllers
             if (result != null)
             {
                 var paper = _mapper.Map<Paper, PaperArchiveModel>(result);
-                _paperStatisticsService.AddViewed(id);
                 return Ok(paper);
             }
             else
@@ -89,6 +88,21 @@ namespace PAF.DAS.WebAPI.Controllers
             }
         }
 
+        [HttpGet, Route("like/{id}")]
+        public IActionResult Like(Guid id)
+        {
+            var result = _paperService.Get(id);
+            if (result != null)
+            {
+                var paper = _mapper.Map<Paper, PaperArchiveModel>(result);
+                _paperStatisticsService.AddViewed(id);
+                return Ok(paper);
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+        }
         [HttpPost]
         public IActionResult Post([FromBody]PaperArchiveModel value)
         {

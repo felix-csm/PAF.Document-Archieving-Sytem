@@ -40,9 +40,9 @@ export class DashboardComponent implements OnInit {
             error => this.errorMessage = <any>error);
     }
 
-    private showViewedStats()
+    private showLikedStats()
     {
-        this.paperArchiveSvc.getViewedStats().then(
+        this.paperArchiveSvc.getLikedStats().then(
             response => {
                 this.itemViewedStats = response;
             },
@@ -64,13 +64,19 @@ export class DashboardComponent implements OnInit {
 
     view(id: string, name: string): void {
         this.fileSvc.viewFile(id, name);
-        this.showViewedStats();
+        this.showLikedStats();
+        this.showDownloadedStats();
+    }
+
+    like(id: string): void {
+        this.paperArchiveSvc.like(id);
+        this.showLikedStats();
         this.showDownloadedStats();
     }
 
     ngOnInit() {
         this.populate();
-        this.showViewedStats();
+        this.showLikedStats();
         this.showDownloadedStats();
     }
 }
