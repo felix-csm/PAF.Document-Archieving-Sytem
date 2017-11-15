@@ -46,14 +46,15 @@ export class FileSvc {
         // });
     }
 
-    viewFile(id: string, name: string): void {
+    viewFile(id: string, name: string): Promise<any>{
         const url = `${AppSettings.API_URL}/paperarchives/${encodeURIComponent(id)}/file`;
         this.http.get(url, { responseType: 'blob' })
             .subscribe(
             data => this.downloadFile(data, name),
             error => alert('Error downloading file!'),
-            () => console.log('OK!')
-            );
+            () => console.log('OK!')                      
+            ); 
+            return Promise.arguments;
     }
     getDownloadedStats(): Promise<PaperArchive[]> {
         const url = `${AppSettings.API_URL}/paperarchives/stats`;
