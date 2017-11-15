@@ -3,17 +3,21 @@
     <div class="col-sm-12">
       <div class="col-sm-6">
         <div class="well well-sm">
-          <i class="glyphicon glyphicon-thumbs-up"></i>&nbsp;&nbsp;Most Liked
+          <h4>
+              &nbsp;&nbsp;<i class="glyphicon glyphicon-thumbs-up text-info"></i>&nbsp;&nbsp;<span class="text-info">Most Liked</span>
+        </h4>
           <div class="list-group" *ngFor="let itemViewed of itemViewedStats">
             <a routerLink="/papers/{{itemViewed.paper.id}}" class="list-group-item  list-group-item-action" title="{{itemViewed.paper.title}}">
               {{itemViewed.paper.title.length > 20 ? (itemViewed.paper.title | slice:0:72)+'...' : itemViewed.paper.title}}<span class="pull-right badge">{{itemViewed.paperStatistic.viewed}}</span>
-            </a>
+            </a>            
           </div>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="well well-sm">
-          <i class="glyphicon glyphicon-paperclip"></i>&nbsp;&nbsp;Most Downloaded
+          <h4>
+            &nbsp;&nbsp;<i class="glyphicon glyphicon-paperclip text-warning"></i>&nbsp;&nbsp;<span class="text-warning">Most Downloaded</span>
+          </h4>
           <div class="list-group" *ngFor="let itemDownloaded of itemDownLoadedStats">
             <a routerLink="/papers/{{itemDownloaded.paper.id}}" class="list-group-item  list-group-item-action" title="{{itemDownloaded.paper.title}}">
               {{itemDownloaded.paper.title.length > 20 ? (itemDownloaded.paper.title | slice:0:72)+'...' : itemDownloaded.paper.title}}<span class="pull-right badge">{{itemDownloaded.paperStatistic.downloaded}}</span>
