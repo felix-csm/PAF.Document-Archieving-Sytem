@@ -14,11 +14,13 @@ import { CurrentUser } from '../../models/current-user';
 export class DashboardComponent implements OnInit {
     name = 'Dashboard';
     items: PaperArchive[];
+    pagedItems: PaperArchive[];
     itemViewedStats: PaperArchive[];
     itemDownLoadedStats: PaperArchive[];
     errorMessage: string;
     params: PaperArchive = new PaperArchive();
     currentUser: CurrentUser;
+    pager: any = { total: 0, perPage: 3, page: 1, totalPage: 0 };
 
     constructor(
         private paperArchiveSvc: PaperArchiveSvc,
@@ -35,9 +37,38 @@ export class DashboardComponent implements OnInit {
     private populate() {
         this.paperArchiveSvc.search(this.params).then(
             response => {
+                this.pager.total = response.length;
+                this.pager.totalPage = Math.ceil(response.length / this.pager.perPage);
                 this.items = response;
+                this.pagedItems = response.slice(0, this.pager.page * this.pager.perPage);
             },
             error => this.errorMessage = <any>error);
+    }
+
+    private hasNext() {
+        return this.pager.total > this.pager.page * this.pager.perPage;
+    }
+
+    private hasPrev() {
+        return (this.pager.page - 1) * this.pager.perPage > 0;
+    }
+
+    private next() {
+        if (this.hasNext()) {
+            this.pager.page += 1;
+            this.setPageData();
+        }
+    }
+
+    private prev() {
+        if (this.hasPrev()) {
+            this.pager.page -= 1;
+            this.setPageData();
+        }
+    }
+
+    private setPageData() {
+        this.pagedItems = this.items.slice((this.pager.page - 1) * this.pager.perPage, this.pager.page * this.pager.perPage);
     }
 
     private showLikedStats() {
@@ -65,7 +96,7 @@ export class DashboardComponent implements OnInit {
             result => {
                 this.showLikedStats();
                 this.showDownloadedStats();
-            })
+            });
     }
 
     like(id: string): void {
@@ -73,7 +104,7 @@ export class DashboardComponent implements OnInit {
             response => {
                 this.showLikedStats();
                 this.showDownloadedStats();
-            })
+            });
     }
 
     ngOnInit() {

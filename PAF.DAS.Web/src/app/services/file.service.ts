@@ -32,12 +32,6 @@ export class FileSvc {
         .toPromise()
         .then(data => { this.downloadFile(data, name); })
         .catch(this.handleError);
-
-        // .then(
-        //     data => this.downloadFile(data, name),
-        //     error => alert('Error downloading file!'),
-        //     () => console.log('OK!')
-        //     );
     }
     getDownloadedStats(): Promise<PaperArchive[]> {
         const url = `${AppSettings.API_URL}/paperarchives/stats`;
