@@ -15,12 +15,7 @@
         </h3>
         <hr/>
         <div class="list-group">
-          <div class="col-sm-12" *ngIf="items?.length == 0">
-            <span class="list-group-item">
-              No records found.
-            </span>
-          </div>
-          <div class="col-sm-6" *ngIf="items?.length > 0">
+          <div class="col-sm-6">
             <div class="well well-sm" style="padding:5px;">
               <h4>
                 &nbsp;&nbsp;
@@ -36,7 +31,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6" *ngIf="items?.length > 0">
+          <div class="col-sm-6">
             <div class="well well-sm" style="padding:5px;">
               <h4>
                 &nbsp;&nbsp;
@@ -51,6 +46,11 @@
                 </a>
               </div>
             </div>
+          </div>
+          <div class="col-sm-12" *ngIf="items?.length == 0">
+            <span class="list-group-item">
+              No records found.
+            </span>
           </div>
           <div class="col-sm-12" *ngFor="let item of pagedItems">
             <div class="list-group-item">
