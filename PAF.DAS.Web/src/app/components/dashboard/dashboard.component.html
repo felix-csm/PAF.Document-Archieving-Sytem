@@ -1,39 +1,5 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
-      <div class="col-sm-6">
-        <div class="well well-sm">
-          <h4>
-            &nbsp;&nbsp;
-            <i class="glyphicon glyphicon-thumbs-up text-info"></i>&nbsp;&nbsp;
-            <span class="text-info">Most Liked</span>
-          </h4>
-          <div class="list-group" *ngFor="let itemViewed of itemViewedStats">
-            <a routerLink="/papers/{{itemViewed.paper.id}}" class="list-group-item  list-group-item-action" title="{{itemViewed.paper.title}}">
-              {{itemViewed.paper.title.length > 20 ? (itemViewed.paper.title | slice:0:72)+'...' : itemViewed.paper.title}}
-              <span
-                class="pull-right badge">{{itemViewed.paperStatistic.viewed}}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="well well-sm">
-          <h4>
-            &nbsp;&nbsp;
-            <i class="glyphicon glyphicon-paperclip text-warning"></i>&nbsp;&nbsp;
-            <span class="text-warning">Most Downloaded</span>
-          </h4>
-          <div class="list-group" *ngFor="let itemDownloaded of itemDownLoadedStats">
-            <a routerLink="/papers/{{itemDownloaded.paper.id}}" class="list-group-item  list-group-item-action" title="{{itemDownloaded.paper.title}}">
-              {{itemDownloaded.paper.title.length > 20 ? (itemDownloaded.paper.title | slice:0:72)+'...' : itemDownloaded.paper.title}}
-              <span
-                class="pull-right badge">{{itemDownloaded.paperStatistic.downloaded}}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="col-md-3">
       <app-dashboard-filter (onFilter)="filter($event)"></app-dashboard-filter>
     </div>
@@ -54,18 +20,37 @@
               No records found.
             </span>
           </div>
-          <div>
-            <ul class="pagination pull-right">
-              <li class="page-item" [ngClass]="{'disabled':!hasPrev()}">
-                <a class="page-link" (click)="prev()">&laquo;</a>
-              </li>
-              <li class="page-item">
-                  <a> page {{pager.page}} of {{pager.totalPage}}</a>
-              </li>
-              <li class="page-item" [ngClass]="{'disabled':!hasNext()}">
-                <a class="page-link" (click)="next()">&raquo;</a>
-              </li>
-            </ul>
+          <div class="col-sm-6" *ngIf="items?.length > 0">
+            <div class="well well-sm" style="padding:5px;">
+              <h4>
+                &nbsp;&nbsp;
+                <i class="glyphicon glyphicon-thumbs-up text-info"></i>&nbsp;&nbsp;
+                <span class="text-info">Most Liked</span>
+              </h4>
+              <div class="list-group">
+                <a routerLink="/papers/{{itemViewed.paper.id}}" title="{{itemViewed.paper.title}}" class="list-group-item list-group-item-action"
+                  *ngFor="let itemViewed of itemViewedStats" style="padding:5px;">
+                  <span style="width: 90%; display: inline-block; white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">{{itemViewed.paper.title}}</span>
+                  <span class="pull-right badge">{{itemViewed.paperStatistic.viewed}}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" *ngIf="items?.length > 0">
+            <div class="well well-sm" style="padding:5px;">
+              <h4>
+                &nbsp;&nbsp;
+                <i class="glyphicon glyphicon-paperclip text-warning"></i>&nbsp;&nbsp;
+                <span class="text-warning">Most Downloaded</span>
+              </h4>
+              <div class="list-group">
+                <a routerLink="/papers/{{itemDownloaded.paper.id}}" title="{{itemDownloaded.paper.title}}" class="list-group-item list-group-item-action"
+                  *ngFor="let itemDownloaded of itemDownLoadedStats" style="padding:5px;">
+                  <span style="width: 90%; display: inline-block; white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">{{itemDownloaded.paper.title}}</span>
+                  <span class="pull-right badge">{{itemDownloaded.paperStatistic.downloaded}}</span>
+                </a>
+              </div>
+            </div>
           </div>
           <div class="col-sm-12" *ngFor="let item of pagedItems">
             <div class="list-group-item">
@@ -100,17 +85,19 @@
               </p>
             </div>
           </div>
-          <ul class="pagination pull-right">
-            <li class="page-item" [ngClass]="{'disabled':!hasPrev()}">
-              <a class="page-link" (click)="prev()">&laquo;</a>
-            </li>
-            <li class="page-item">
-              <a> page {{pager.page}} of {{pager.totalPage}}</a>
-            </li>
-            <li class="page-item" [ngClass]="{'disabled':!hasNext()}">
-              <a class="page-link" (click)="next()">&raquo;</a>
-            </li>
-          </ul>
+          <div class="col-sm-offset-9">
+            <ul class="pagination" *ngIf="items?.length > 0">
+              <li class="page-item" [ngClass]="{'disabled':!hasPrev()}">
+                <a class="page-link" (click)="prev()">&laquo;</a>
+              </li>
+              <li class="page-item">
+                <a> page {{pager.page}} of {{pager.totalPage}}</a>
+              </li>
+              <li class="page-item" [ngClass]="{'disabled':!hasNext()}">
+                <a class="page-link" (click)="next()">&raquo;</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
