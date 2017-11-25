@@ -18,7 +18,7 @@ import { PaperArchive } from '../../models/paper-archive';
 
 export class PaperArchiveComponent implements OnInit {
     formName: string;
-    private model: PaperArchive;
+    model: PaperArchive;
     errorMessage: string;
     filesToUpload: File[];
     private fileIsValid: boolean;

@@ -66,7 +66,7 @@ namespace PAF.DAS.WebAPI.Controllers
         }
 
         [HttpGet("{id}/file")]
-        public IActionResult GetFile(Guid id)
+        public async Task<IActionResult> GetFile(Guid id)
         {
             var paper = _paperService.Get(id);
             var result = _paperArchieveService.GetByPaperId(id);
@@ -74,7 +74,8 @@ namespace PAF.DAS.WebAPI.Controllers
             {
                 FileInfo file = new FileInfo(result.Location);
                 _paperStatisticsService.AddDownloaded(id);
-                return File(ReadFile(result.Location), "application/pdf");
+
+                return File(await ReadFile(result.Location), "application/pdf");
             }
             else
             {
@@ -82,7 +83,7 @@ namespace PAF.DAS.WebAPI.Controllers
             }
         }
 
-        private byte[] ReadFile(string filePath)
+        private async Task<byte[]> ReadFile(string filePath)
         {
             byte[] buffer;
             FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -94,7 +95,7 @@ namespace PAF.DAS.WebAPI.Controllers
                 int sum = 0;                          // total number of bytes read
 
                 // read until Read method returns 0 (end of the stream has been reached)
-                while ((count = fileStream.Read(buffer, sum, length - sum)) > 0)
+                while ((count = await fileStream.ReadAsync(buffer, sum, length - sum)) > 0)
                     sum += count;  // sum is a buffer offset for next reading
             }
             finally
